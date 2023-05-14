@@ -19,11 +19,11 @@ const OtpVerify = ()=>{
     for (let i = 0; i < inputs.length; i++) { inputs[i].addEventListener('keydown', function(event) { if (event.key==="Backspace" ) { inputs[i].value='' ; if (i !==0) inputs[i - 1].focus(); } else { if (i===inputs.length - 1 && inputs[i].value !=='' ) { return true; } else if (event.keyCode> 47 && event.keyCode < 58) { inputs[i].value=event.key; if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } else if (event.keyCode> 64 && event.keyCode < 91) { inputs[i].value=String.fromCharCode(event.keyCode); if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } } }); } 
     
     const resend= async(e)=>{
-        const result = await axios.post('https://iaiserver.onrender.com/createotp', {
+        const result = await axios.post('https://iai-v1.onrender.com/createotp', {
             email:mail,
         }).then(res=>{
             if(res.data.status=="success"){
-            axios.post('https://iaiserver.onrender.com/mailer',{
+            axios.post('https://iai-v1.onrender.com/mailer',{
                 email:mail,
                 subject:"Resend OTP",
                 content:res.data.otp
@@ -50,7 +50,7 @@ const OtpVerify = ()=>{
 
         console.log(verify)
         try {
-                const result = await axios.post('https://iaiserver.onrender.com/verifyotp', {
+                const result = await axios.post('https://iai-v1.onrender.com/verifyotp', {
                     email:mail,
                     verify:verify
                 }).then(res=>{
@@ -63,17 +63,17 @@ const OtpVerify = ()=>{
                         const user = JSON.parse(userDetails)
                         console.log(user)
                         if(user[0].affiliation == "academic"){
-                            const result = axios.post('https://iaiserver.onrender.com/createacademy',{user:user}).then(res=>{
+                            const result = axios.post('https://iai-v1.onrender.com/createacademy',{user:user}).then(res=>{
                             console.log(res)
                             if(res.data.status=="success"){
                                 console.log("user creation successful")
                                 alert("Registration successful")
-                                axios.delete("https://iaiserver.onrender.com/deleteUser",{email:mail}).then(res=>{
+                                axios.delete("https://iai-v1.onrender.com/deleteUser",{email:mail}).then(res=>{
                                         console.log(res)
                                     })
                                 localStorage.clear("userDetails")
 
-                                const result1 = axios.post('https://iaiserver.onrender.com/mailer', {
+                                const result1 = axios.post('https://iai-v1.onrender.com/mailer', {
                             
                                 email:mail,
                                 subject:"Registration successful",

@@ -13,7 +13,7 @@ function ForgotPasswordPage() {
       return;
     }
     else{
-      axios.post('https://iaiserver.onrender.com/updatepass',{
+      axios.post('https://iai-v1.onrender.com/updatepass',{
         password:password,
         token:token
       }).then((res)=>{

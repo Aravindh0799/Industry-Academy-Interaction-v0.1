@@ -151,7 +151,7 @@ const Register = () => {
           
           if(affiliationType === "academic"){
             try {
-                const response =  await Axios.post('https://iaiserver.onrender.com/find-username',{
+                const response =  await Axios.post('https://iai-v1.onrender.com/find-username',{
             
                     email:email
                     
@@ -175,10 +175,10 @@ const Register = () => {
                             console.log('jsonarr', stringarr);
                             localStorage.setItem('userDetails', stringarr);
 
-                            Axios.post('https://iaiserver.onrender.com/createotp',{email:email}).then((res)=>{
+                            Axios.post('https://iai-v1.onrender.com/createotp',{email:email}).then((res)=>{
                                 if (res.data.status == "success"){
                                     const otp = res.data.otp
-                                    Axios.post('https://iaiserver.onrender.com/mailer',{email:email,subject:"OTP for registration",content:otp}).then(res=>{
+                                    Axios.post('https://iai-v1.onrender.com/mailer',{email:email,subject:"OTP for registration",content:otp}).then(res=>{
                                         if(res.data.status =="success"){
                                             setSuccess(true);
                                             
@@ -231,7 +231,7 @@ const Register = () => {
         }
         else if(affiliationType === 'industry'){
             try {
-                const response = await Axios.post('https://iaiserver.onrender.com/register_industry',{
+                const response = await Axios.post('https://iai-v1.onrender.com/register_industry',{
                     name:user,
                     email:email,
                     password: pwd,

@@ -8,12 +8,12 @@ function ForgotPasswordPage() {
   
     const handleSubmit = (event) => {
       event.preventDefault();
-        axios.post('https://iaiserver.onrender.com/forgot',{
+        axios.post('https://iai-v1.onrender.com/forgot',{
           email:email
         }).then((res)=>{
           console.log(res.data.status);
           const link =res.data.redirect;
-          axios.post("https://iaiserver.onrender.com/sendmail",{
+          axios.post("https://iai-v1.onrender.com/sendmail",{
             link:link,
             email:email,
             sub:"Reset password link"

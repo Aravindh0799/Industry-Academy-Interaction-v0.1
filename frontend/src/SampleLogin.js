@@ -63,7 +63,7 @@ useEffect(() => {
         Axios({
             
             method:"post",
-            url:"https://iaiserver.onrender.com/login",
+            url:"https://iai-v1.onrender.com/login",
             data:{
                 email:email,
                 password:password
@@ -73,7 +73,7 @@ useEffect(() => {
             if(res.data.message==="true"){
                 Axios({
                     method:"post",
-                    url:"https://iaiserver.onrender.com/login_academy",
+                    url:"https://iai-v1.onrender.com/login_academy",
                     data:{
                         email:email,
                         password:password
@@ -98,7 +98,7 @@ useEffect(() => {
             else{
                 Axios({
                     method:"post",
-                    url:"https://iaiserver.onrender.com/login_industry",
+                    url:"https://iai-v1.onrender.com/login_industry",
                     data:{
                         email:email,
                         password:password

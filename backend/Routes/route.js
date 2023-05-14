@@ -421,7 +421,7 @@ router.post('/forgetpassword', async(req, res)=>{
                 const secret =  JWT_SECRET + user.password;
                 const token = jwt.sign({email:user.email, id:user._id},secret );
                 const flag = user.affiliation;
-                const link = `https://iaiserver.onrender.com/resetpassword/${user._id}/${flag}/${token}`;
+                const link = `https://iai-v1.onrender.com/resetpassword/${user._id}/${flag}/${token}`;
                 console.log(link);
                 //nodemailer
                 res.send({
@@ -433,8 +433,8 @@ router.post('/forgetpassword', async(req, res)=>{
             const secret =  JWT_SECRET + olduser.password;
             const token = jwt.sign({email:olduser.email, id:olduser._id},secret );
             const flag = olduser.affiliation;
-            // res.render(`https://iaiserver.onrender.com/reset/${olduser._id}/${token}`);
-            const link = `https://iaiserver.onrender.com/resetpassword/${olduser._id}/${flag}/${token}`;
+            // res.render(`https://iai-v1.onrender.com/reset/${olduser._id}/${token}`);
+            const link = `https://iai-v1.onrender.com/resetpassword/${olduser._id}/${flag}/${token}`;
             console.log(link);
             //nodemailer
             res.send({
