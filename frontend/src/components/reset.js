@@ -21,7 +21,7 @@ function ForgotPasswordPage() {
         if(res.data.message==='updated'){
           alert('updated succesfully');
           window.localStorage.clear('token');
-          window.location.href='http://localhost:3000/samplelogin';
+          window.location.href='https://iai-version-1-aravindh0799.vercel.app/samplelogin';
         }
       })
     }

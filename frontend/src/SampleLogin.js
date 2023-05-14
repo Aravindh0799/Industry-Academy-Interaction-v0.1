@@ -83,7 +83,7 @@ useEffect(() => {
                     if(res.data.status==="success for academy"){
                       console.log('hi')
                       localStorage.setItem("userName",res.data.name)
-                      window.location.href="http://localhost:3000/";
+                      window.location.href="https://iai-version-1-aravindh0799.vercel.app/";
                     }
                     else{
                       alert('user not registered')
@@ -107,7 +107,7 @@ useEffect(() => {
                   console.log('got response', res)
                   if(res.data.status==="success for industry"){
                     console.log('hi')
-                    window.location.href="http://localhost:3000/";
+                    window.location.href="https://iai-version-1-aravindh0799.vercel.app/";
                   }
                   else{
                     alert('user not registered')

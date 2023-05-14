@@ -474,7 +474,7 @@ router.post('/forgot',async(req,res)=>{
         const secret = JWT_SECRET+olduser.password;
             const token = jwt.sign({email:olduser.email, id:olduser._id},JWT_SECRET );
 
-            const transfer = `http://localhost:3000/reset/${token}/${olduser._id}`;
+            const transfer = `https://iai-version-1-aravindh0799.vercel.app/reset/${token}/${olduser._id}`;
             res.send({
                 status:"success",
                 token:token,
