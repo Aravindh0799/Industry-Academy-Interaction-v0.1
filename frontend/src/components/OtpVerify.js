@@ -54,7 +54,7 @@ const OtpVerify = ()=>{
                     email:mail,
                     verify:verify
                 }).then(res=>{
-                    if(res.data.status==="failure"){
+                    if(res.data.status=="failure"){
                         alert('try resend the otp ')
                     }
                     else{
