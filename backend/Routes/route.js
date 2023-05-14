@@ -119,7 +119,7 @@ router.post('/verifyotp', async(req, res)=>{
     try {
         const result = await Otp.findOne({email:email});
         if(result){
-            if(result.otp===verify){
+            if(result.otp==verify){
                 res.json({
                     status:"success",
                     message:"successfully authenticated user"
