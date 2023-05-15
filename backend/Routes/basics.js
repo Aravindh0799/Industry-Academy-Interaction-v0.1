@@ -7,7 +7,9 @@ const bcrypt  = require('bcrypt')
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken')
 const otp = require('otp-generator')
+const domains = require('../Schema/domain');
 const e = require('express')
+const domain = require('../Schema/domain')
 const JWT_SECRET = "ciwbuconciwevccwu1229238c/idb871cb91383hc}28vwrgbw8b748{62[]()68cwv";
 
 router.post('/createotp',async(req,res)=>{
@@ -130,4 +132,86 @@ router.delete("/deleteUser",async(req,res)=>{
     }
 })
 
-module.exports=router
+router.get('/sequence',async(req, res)=>{
+    console.log('inside the sequence');
+    const result = await domains.find();
+    var clen = result.length;
+    if(clen){
+        res.json({
+            status:"success",
+            len:clen
+        })
+    }else{
+        res.json({
+            len:0 
+        })
+    }
+})
+
+router.post('/createdoamin',async(req, res)=>{
+    console.log('from the create domain api');
+    const result = new domains(req.body);
+    if(result){
+        res.json({
+            status:'success',
+            message:"sucessfully inserted"
+        })
+    }else{
+        res.json({
+            status:'failure',
+            error :'error occured'
+        })
+    }
+})                                                                                                                                                                          
+router.get('fetchall', async(req, res)=>{
+    console.log('from the fetchal api');
+    const data = await domains.find();
+    if(data){
+        res.json({
+            status:"success",
+            data:data
+        })
+    }
+    else{
+        res.json({
+            status:"failure",
+            error:"error occured"
+        })
+    }
+})
+
+router.patch('/edit', async(req, res)=>{
+    console.log('from the edit api',req.body.universityname, req.body.domain);
+    const result = await domains.findOne(
+        {
+            seq:seq
+        },
+        {
+            $set:{
+                universityname:universityname,
+                domain:domain
+            }
+        }
+    )
+
+})
+
+router.post('deletedomain',async(req, res)=>{
+    console.log('from the delete domain api');
+    const result  = await domain.deleteOne({domain:domain});
+    if(result){
+        res.json({
+            status:"success",
+            message:"succesfully deletd"
+        })
+    }
+    else{
+        res.json({
+            status:'failure',
+            error:'error occured'
+        })
+    }
+
+})
+
+module.exports=router                            
