@@ -41,7 +41,7 @@ function Caarousel() {
           alt="First slide"
         />
         <Carousel.Caption>
-          <h3>{index} slide label</h3>
+          
           <p>{slides[index].caption}</p>
         </Carousel.Caption>
       </Carousel.Item>)}
