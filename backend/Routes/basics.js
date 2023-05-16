@@ -8,6 +8,8 @@ const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken')
 const otp = require('otp-generator')
 const domains = require('../Schema/domain');
+const urls = require('../Schema/url');
+const newsfeed = require('../Schema/news');
 const e = require('express')
 const domain = require('../Schema/domain')
 const JWT_SECRET = "ciwbuconciwevccwu1229238c/idb871cb91383hc}28vwrgbw8b748{62[]()68cwv";
@@ -132,9 +134,26 @@ router.delete("/deleteUser",async(req,res)=>{
     }
 })
 
-router.get('/sequence',async(req, res)=>{
+router.post('/sequencedomain',async(req, res)=>{
     console.log('inside the sequence');
     const result = await domains.find();
+    var clen = result.length;
+    console.log(clen);
+    if(clen){
+        res.json({
+            status:"success",
+            len:clen
+        })
+    }else{
+        res.json({
+            len:0 
+        })
+    }
+})
+
+router.post('/sequenceurl',async(req, res)=>{
+    console.log('inside the sequenceurls');
+    const result = await urls.find();
     var clen = result.length;
     if(clen){
         res.json({
@@ -148,9 +167,28 @@ router.get('/sequence',async(req, res)=>{
     }
 })
 
-router.post('/createdoamin',async(req, res)=>{
-    console.log('from the create domain api');
-    const result = new domains(req.body);
+router.post('/sequencenews',async(req, res)=>{
+    console.log('inside the sequencenews');
+    const result = await newsfeed.find();
+    var clen = result.length;
+    if(clen){
+        res.json({
+            status:"success",
+            len:clen
+        })
+    }else{
+        res.json({
+            len:0 
+        })
+    }
+})
+
+
+router.post('/createdomain',async(req, res)=>{
+    console.log('from the create domain api',req.body);
+    const data = new domains(req.body);
+    const result = await data.save();
+    console.log(result);
     if(result){
         res.json({
             status:'success',
@@ -162,9 +200,48 @@ router.post('/createdoamin',async(req, res)=>{
             error :'error occured'
         })
     }
-})                                                                                                                                                                          
-router.get('fetchall', async(req, res)=>{
-    console.log('from the fetchal api');
+})  
+
+
+router.post('/createurl',async(req, res)=>{
+    console.log('from the create url api',req.body);
+    const data = new urls(req.body);
+    const result = await data.save();
+    console.log(result);
+    if(result){
+        res.json({
+            status:'success',
+            message:"sucessfully inserted"
+        })
+    }else{
+        res.json({
+            status:'failure',
+            error :'error occured'
+        })
+    }
+})  
+
+
+router.post('/createnews',async(req, res)=>{
+    console.log('from the create news api',req.body);
+    const data = new newsfeed(req.body);
+    const result = await data.save();
+    console.log(result);
+    if(result){
+        res.json({
+            status:'success',
+            message:"sucessfully inserted"
+        })
+    }else{
+        res.json({
+            status:'failure',
+            error :'error occured'
+        })
+    }
+})  
+
+router.get('/fetchalldomain', async(req, res)=>{
+    console.log('from the fetchal api',req.body);
     const data = await domains.find();
     if(data){
         res.json({
@@ -180,25 +257,128 @@ router.get('fetchall', async(req, res)=>{
     }
 })
 
-router.patch('/edit', async(req, res)=>{
+router.get('/fetchallurls', async(req, res)=>{
+    console.log('from the fetchall api');
+    const data = await urls.find();
+    if(data){
+        res.json({
+            status:"success",
+            data:data
+        })
+    }
+    else{
+        res.json({
+            status:"failure",
+            error:"error occured"
+        })
+    }
+})
+
+router.get('/fetchalldomain', async(req, res)=>{
+    console.log('from the fetchal api');
+    const data = await newsfeed.find();
+    if(data){
+        res.json({
+            status:"success",
+            data:data
+        })
+    }
+    else{
+        res.json({
+            status:"failure",
+            error:"error occured"
+        })
+    }
+})
+
+
+router.patch('/editdomain', async(req, res)=>{
     console.log('from the edit api',req.body.universityname, req.body.domain);
     const result = await domains.findOne(
         {
-            seq:seq
+            seq:req.body.seq
         },
         {
             $set:{
-                universityname:universityname,
-                domain:domain
+                universityname:req.body.universityname,
+                domain:req.body.domain
             }
         }
     )
+    if(result){
+        res.json({
+            status:"success",
+            message:"updated succesfully"
+        })
+    }
+    else{
+        res.json({
+            status:"failure",
+            error:"error occured in update"
+        })
+    }
+})
+
+
+router.patch('/editurl', async(req, res)=>{
+    console.log('from the edit api',req.body.url, req.body.title);
+    const result = await domains.findOne(
+        {
+            seq:req.body.seq
+        },
+        {
+            $set:{
+                url:req.body.url,
+                link:req.body.link
+            }
+        }
+    )
+    if(result){
+        res.json({
+            status:"success",
+            message:"updated succesfully"
+        })
+    }
+    else{
+        res.json({
+            status:"failure",
+            error:"error occured in update"
+        })
+    }
+})
+
+
+router.patch('/editnews', async(req, res)=>{
+    console.log('from the edit api',req.body.newsfeedurl, req.body.title);
+    const result = await domains.findOne(
+        {
+            seq:req.body.seq
+        },
+        {
+            $set:{
+                newsfeedurl:req.body.newsfeedurl,
+                title:req.body.title
+            }
+        }
+    )
+    if(result){
+        res.json({
+            status:"success",
+            message:"updated succesfully"
+        })
+    }
+    else{
+        res.json({
+            status:"failure",
+            error:"error occured in update"
+        })
+    }
 
 })
 
-router.post('deletedomain',async(req, res)=>{
+router.post('/deletedomain',async(req, res)=>{
     console.log('from the delete domain api');
-    const result  = await domain.deleteOne({domain:domain});
+    const result  = await domain.deleteOne({seq:seq});
     if(result){
         res.json({
             status:"success",
