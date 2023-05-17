@@ -7,11 +7,40 @@ const bcrypt  = require('bcrypt')
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken')
 const otp = require('otp-generator')
+const job=require('../Schema/jobs')
 const JWT_SECRET = "ciwbuconciwevccwu1229238c/idb871cb91383hc}28vwrgbw8b748{62[]()68cwv";
 
 router.post('/', async(req, res)=>{
     console.log('hello user')
     res.send('hello world')
+})
+router.get('/getalljob',async(req,res)=>{
+    console.log('from the getall api');
+    const user=await job.find();
+    if(user){
+        res.json({
+            user
+        })
+    }
+    else{
+        res.json({
+            message:"failed"
+        })
+    }
+}),
+router.post('/job_post',async(req,res)=>{
+    const user=new job(req.body)
+    const result=await user.save();
+    if(result)
+    {
+        res.json({
+            message:"success"
+        })
+    }
+    else
+    {
+        console.log('fail')
+    }
 })
 
 router.post('/register_academy', async(req, res)=>{
