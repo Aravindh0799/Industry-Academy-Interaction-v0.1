@@ -1,8 +1,4 @@
-.split-page {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-  }
+
 .registration-split-page{
   display: flex;
   flex-direction: row;
@@ -66,10 +62,12 @@
     padding: 10px;
     min-height: 100vh;
     background-color: #F6F1F1;
+   
   }
   
   .register-right-fields{
     width: 60%;
+    transition: height 3s ease;
   }
 
 
@@ -98,6 +96,8 @@
   h2{
     text-align: center;
   }
+
+ 
 
 
 
@@ -146,6 +146,8 @@
     color: black;
     transition: 0.7s;
   }
+
+
   
 
   @media only screen and (max-width: 768px) {

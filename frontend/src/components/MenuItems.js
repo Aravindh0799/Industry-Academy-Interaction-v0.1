@@ -49,12 +49,12 @@ export const MenuItems = [
 
 
 export const MenuItemsBeforeLogin =[
-    {
-        title : "Home",
-        url : "#",
-        cName : "nav-links",
-        icon : "fa-solid fa-house-user"
-    },
+    // {
+    //     title : "Home",
+    //     url : "#",
+    //     cName : "nav-links",
+    //     icon : "fa-solid fa-house-user"
+    // },
     {
         title : "Login",
         url : "samplelogin",
