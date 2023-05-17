@@ -44,12 +44,13 @@ const render=   detail.map((job,val)=>{
                       </span>
                       <span className="text-truncate me-0">
                         <i className="far fa-money-bill-alt text-primary me-2" />
-                        ${job.startingsalary} - ${job.endingsalary}
+                        {job.startingsalary} - {job.endingsalary}
                       </span>
                       <br/>
                     <span className="text-truncate me-0">
                       <i className="fas fa-building text-primary me-2" />
-                      zoho
+                      {job.company}
+
                     </span>
                     </div>
                   </div>
@@ -129,7 +130,7 @@ const render=   detail.map((job,val)=>{
                 <div className="col-sm-12 col-md-8 d-flex align-items-center">
                   <img
                     className="flex-shrink-0 img-fluid border rounded"
-                    src="img/com-logo-1.jpg"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgHHSeJEgJEdQ7-T8Rd18sDatEyRbb40yWfZCjUSEjXA&s"
                     alt=""
                     style={{ width: 80, height: 80 }}
                   />
@@ -137,7 +138,7 @@ const render=   detail.map((job,val)=>{
                     <h5 className="mb-3">Software Engineer</h5>
                     <span className="text-truncate me-3">
                       <i className="fa fa-map-marker-alt text-primary me-2" />
-                      New York, USA
+                      Chennai
                     </span>
                     <span className="text-truncate me-3">
                       <i className="far fa-clock text-primary me-2" />
@@ -145,7 +146,7 @@ const render=   detail.map((job,val)=>{
                     </span>
                     <span className="text-truncate me-0">
                       <i className="far fa-money-bill-alt text-primary me-2" />
-                      $123 - $456
+                      30k - 50k
                     </span>
                     <br/>
                     <span className="text-truncate me-0">
@@ -165,7 +166,7 @@ const render=   detail.map((job,val)=>{
                   </div>
                   <small className="text-truncate">
                     <i className="far fa-calendar-alt text-primary me-2" />
-                    Date Line: 01 Jan, 2045
+                    Date Line: 17-5-2023
                   </small>
                 </div>
               </div>

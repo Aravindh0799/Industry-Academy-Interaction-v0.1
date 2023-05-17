@@ -26,6 +26,10 @@ const joblist= mongoose.Schema({
       },
     date:{
         type:String,
+    },
+    company:
+    {
+        type:String
     }
     
 })

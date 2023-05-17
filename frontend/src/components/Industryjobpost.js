@@ -19,6 +19,8 @@ function Industryjobpost() {
     const [endingsalary, setEndingsalary] = useState("");
     const [image, setImage] = useState("");
     const [Date,setDate]=useState("")
+    const [company,setCompany]=useState("")
+
     const navigate=useNavigate();
     const handlesubmit= (e)=>
     {
@@ -26,7 +28,7 @@ function Industryjobpost() {
         var today = new window.Date();
         setDate(today.getDate()+ '-' + (today.getMonth() + 1) + '-' + today.getFullYear())
 
-        Axios.post('http://10.1.218.123:6080/job_post',{
+        Axios.post('http://localhost:6080/job_post',{
             designation:designation,
             description:description,
             city:city,
@@ -34,7 +36,8 @@ function Industryjobpost() {
             startingsalary:startingsalary,
             endingsalary:endingsalary,
             image:image,
-            date:Date
+            date:Date,
+            company:company
 
             
 
@@ -103,6 +106,8 @@ function Industryjobpost() {
         <input onChange={(e)=>{setStartingsalary(e.target.value)}} value={startingsalary} placeholder='startingsalary'/>
         <br/><br/>
         <input onChange={(e)=>{setEndingsalary(e.target.value)}} value={endingsalary} placeholder='endingsalary'/>
+        <br/><br/>
+        <input onChange={(e)=>{setCompany(e.target.value)}} value={company} placeholder='companyname'/>
         <br/><br/>
         UPLOAD IMAGE:<br></br><input onChange={convertToBase64} type ="file" accept='image/*' placeholder='uploag image'/>
         {image==""||image==null?"": <img width={50} height={100} src={image}/>}
