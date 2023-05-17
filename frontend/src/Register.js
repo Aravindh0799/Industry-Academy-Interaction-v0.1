@@ -15,6 +15,8 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 const REGISTER_URL = '/register';
 
+
+
 const Register = () => {
     const userRef = useRef();
     const errRef = useRef();
@@ -151,7 +153,7 @@ const Register = () => {
           
           if(affiliationType === "academic"){
             try {
-                const response =  await Axios.post('https://iai-v1.onrender.com/find-username',{
+                const response =  await Axios.post('http://localhost:6080/find-username',{
             
                     email:email
                     
@@ -159,7 +161,6 @@ const Register = () => {
                     if (res.data.status === 409) {
                         //new user
                         console.log("response   ", res.data.status);
-                       
                         const userDetails= [{
                             name:user,
                             email:email,
@@ -175,10 +176,10 @@ const Register = () => {
                             console.log('jsonarr', stringarr);
                             localStorage.setItem('userDetails', stringarr);
 
-                            Axios.post('https://iai-v1.onrender.com/createotp',{email:email}).then((res)=>{
+                            Axios.post('http://localhost:6080/createotp',{email:email}).then((res)=>{
                                 if (res.data.status == "success"){
                                     const otp = res.data.otp
-                                    Axios.post('https://iai-v1.onrender.com/mailer',{email:email,subject:"OTP for registration",content:otp}).then(res=>{
+                                    Axios.post('http://localhost:6080/mailer',{email:email,subject:"OTP for registration",content:otp}).then(res=>{
                                         if(res.data.status =="success"){
                                             setSuccess(true);
                                             
@@ -231,48 +232,79 @@ const Register = () => {
         }
         else if(affiliationType === 'industry'){
             try {
-                const response = await Axios.post('https://iai-v1.onrender.com/register_industry',{
-                    name:user,
-                    email:email,
-                    password: pwd,
-                    affiliation:affiliationType,
-                    companyname:companyName,
-                    designation:designationName,
-                    chamber:chamberMember
-                }).then(res=>{            
-                    if (res.data.status == 409) {
+                const response =  await Axios.post('http://localhost:6080/find-username',{
+            
+                    email:email
+                    
+                }).then(res=>{
+                    if (res.data.status === 409) {
+                        //new user
                         console.log("response   ", res.data.status);
+                       
+                        const userDetails= [{
+                            name:user,
+                            email:email,
+                            password: pwd,
+                            affiliation:affiliationType,
+                            companyname:companyName,
+                            designation:designationName,
+                            chamber:chamberMember
+                        }];
+                
+                        const stringarr = JSON.stringify(userDetails);
+                        console.log('jsonarr', stringarr);
+                        localStorage.setItem('userDetails', stringarr);
+
+                        Axios.post('http://localhost:6080/createotp',{email:email}).then((res)=>{
+                            if (res.data.status == "success"){
+                                const otp = res.data.otp
+                                Axios.post('http://localhost:6080/mailer',{email:email,subject:"OTP for registration",content:otp}).then(res=>{
+                                    if(res.data.status =="success"){
+                                        setSuccess(true);                                        
+                                    }
+                                    else{
+                                        setSuccess(false)
+                                    }
+                                })
+                            }
+                            else{
+                                setSuccess(false)
+                            }
+                        })
+                    }
+                    else{
                         setUsernameError("User already exist");
                         setSuccess(false);
                     }
-                    else{
-                        // setErrMsg(false);
-                        setSuccess(true);
-                        console.log("error")
-                    }
-                });
-;
-               
+                })
+                // response();
+
+                // setSuccess(true);
             
                 setEmail('');
                 setUser('');
                 setPwd('');
                 setMatchPwd('');
+                setAcademicPosition('');
+                setCompanyName('');
+                setDesignationName('');
+                setChamberMember('');
+                setDegree('');
+                setDeptName('');
+                
+
             } catch (err) {
-                console.log('error occured in catch()',err)
+             console.log('unknown eroor in catch()', err)
                 if (!err?.response) {
                     setErrMsg('No Server Response');
                 }  else {
-                    setErrMsg('Registration Failed')
+                    setErrMsg('Registration Failed');
                 }
                 // errRef.current.focus();
             }
         }
-        
     }
-    
-    
-    
+
     return (
         <>
             {success ? (

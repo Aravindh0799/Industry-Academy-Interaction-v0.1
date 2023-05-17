@@ -31,7 +31,7 @@ const Login = () => {
         try {
             Axios({
                 method:"post",
-                url:"https://iai-v1.onrender.com/login",
+                url:"http://localhost:6080/login",
                 data:{
                     email:user,
                     password:pwd
@@ -40,7 +40,7 @@ const Login = () => {
                 if(res.data.message=="true"){
                     Axios({
                         method:"post",
-                        url:"https://iai-v1.onrender.com/login_academy",
+                        url:"http://localhost:6080/login_academy",
                         data:{
                             email:user,
                             password:pwd
@@ -54,7 +54,7 @@ const Login = () => {
                 else{
                     Axios({
                         method:"post",
-                        url:"https://iai-v1.onrender.com/login_industry",
+                        url:"http://localhost:6080/login_industry",
                         data:{
                             email:user,
                             password:pwd

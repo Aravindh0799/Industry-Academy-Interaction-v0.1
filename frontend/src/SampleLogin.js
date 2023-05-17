@@ -3,9 +3,10 @@ import "./Samplelogin.css"; // import your CSS file here
 import Axios from 'axios';
 import Image from './assets/signup_image_1.jpg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-
+// toast.configure();
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
@@ -56,24 +57,20 @@ useEffect(() => {
     try {
         window.localStorage.setItem("userMail",email);
         
-        
-
-
-
         Axios({
             
             method:"post",
-            url:"https://iai-v1.onrender.com/login",
+            url:"http://localhost:6080/login",
             data:{
                 email:email,
                 password:password
             }
         }).then((res)=>{
             
-            if(res.data.message==="true"){
+            if(res.data.message==="academy"){
                 Axios({
                     method:"post",
-                    url:"https://iai-v1.onrender.com/login_academy",
+                    url:"http://localhost:6080/login_academy",
                     data:{
                         email:email,
                         password:password
@@ -83,10 +80,11 @@ useEffect(() => {
                     if(res.data.status==="success for academy"){
                       console.log('hi')
                       localStorage.setItem("userName",res.data.name)
-                      window.location.href="https://iai-version-1-aravindh0799.vercel.app/";
+                      toast.success("Login Successful")
+                      window.location.href="home";
                     }
                     else{
-                      alert('user not registered')
+                      toast.error('user not registered')
                       console.log('error')
                     }
 
@@ -95,27 +93,34 @@ useEffect(() => {
                     
                 })
             }
+            else if(res.data.message=='industry'){
+              Axios({
+                method:"post",
+                url:"http://localhost:6080/login_industry",
+                data:{
+                    email:email,
+                    password:password
+                }
+            }).then((res)=>{
+                console.log('res', res.data.status);
+                if(res.data.status==="success for industry"){
+                  console.log('hi')
+                  localStorage.setItem("userName",res.data.name)
+                  toast.success("Login Successful")
+                  window.location.href="industry";
+                }
+                else{
+                  toast.error('user not registered')
+                  console.log('error')
+                }
+
+                window.localStorage.setItem("token", res);
+                window.localStorage.setItem('is logged in', "true");
+                
+            })
+            }
             else{
-                Axios({
-                    method:"post",
-                    url:"https://iai-v1.onrender.com/login_industry",
-                    data:{
-                        email:email,
-                        password:password
-                    }
-                }).then((res)=>{
-                  console.log('got response', res)
-                  if(res.data.status==="success for industry"){
-                    console.log('hi')
-                    window.location.href="https://iai-version-1-aravindh0799.vercel.app/";
-                  }
-                  else{
-                    alert('user not registered')
-                    console.log('error')
-                  }
-                    window.localStorage.setItem("token", res);
-                    window.localStorage.setItem('is logged in', "true");
-                })
+               alert('user not registered');
             }
         })
     }
@@ -126,6 +131,7 @@ useEffect(() => {
 
   return (
     <div className="split-page">
+      <ToastContainer />
       <div className="left-section">
         <h1>LOGO</h1>
         <div className="left-main">

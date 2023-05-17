@@ -29,7 +29,7 @@ function Navbar1(){
                 <SearchBar placeholder="Search here..." data={Data}></SearchBar>
             </div> */}
             {/* <div className='grid-container'> */}
-           {login? <ul className={clicked ? "nav-menu active" : "nav-menu"}>
+           {login? <ul className={clicked ? "nav-menu active" : "nav-menu-login"}>
                 {login && MenuItems.map((item,index) => {
                     return(
                             <li key={index} >

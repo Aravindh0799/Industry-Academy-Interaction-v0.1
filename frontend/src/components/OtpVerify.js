@@ -1,6 +1,8 @@
 import {useState,useEffect,React} from "react";
 import './Otpverify.css'
 import axios from '../api/axios';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const OtpVerify = ()=>{
@@ -19,21 +21,22 @@ const OtpVerify = ()=>{
     // for (let i = 0; i < inputs.length; i++) { inputs[i].addEventListener('keydown', function(event) { if (event.key==="Backspace" ) { inputs[i].value='' ; if (i !==0) inputs[i - 1].focus(); } else { if (i===inputs.length - 1 && inputs[i].value !=='' ) { return true; } else if (event.keyCode> 47 && event.keyCode < 58) { inputs[i].value=event.key; if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } else if (event.keyCode> 64 && event.keyCode < 91) { inputs[i].value=String.fromCharCode(event.keyCode); if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } } }); } 
     
     const resend= async(e)=>{
-        const result = await axios.post('https://iai-v1.onrender.com/createotp', {
+        const result = await axios.post('http://localhost:6080/createotp', {
             email:mail,
         }).then(res=>{
             if(res.data.status=="success"){
-            axios.post('https://iai-v1.onrender.com/mailer',{
+            axios.post('http://localhost:6080/mailer',{
                 email:mail,
                 subject:"Resend OTP",
                 content:res.data.otp
             }).then(res=>{
                 if(res.data.status == "success"){
-                    alert("Successfully sent the OTP again. Kindly check your mail")
+                    toast.success("Successfully sent the OTP again. Kindly check your mail")
                 }
             })
         }
         else{
+            toast.error("Resend failed")
             console.log("resend failed")
         }
             // console.log('from the response for resend link', res.data.status);
@@ -50,12 +53,13 @@ const OtpVerify = ()=>{
 
         console.log(verify)
         try {
-                const result = await axios.post('https://iai-v1.onrender.com/verifyotp', {
+                const result = await axios.post('http://localhost:6080/verifyotp', {
                     email:mail,
                     verify:verify
                 }).then(res=>{
                     if(res.data.status=="failure"){
-                        alert('try resend the otp ')
+                        toast.error("Try resend the OTP")
+                        // alert('try resend the otp ')
                     }
                     else{
                         const userDetails=localStorage.getItem('userDetails')
@@ -63,17 +67,19 @@ const OtpVerify = ()=>{
                         const user = JSON.parse(userDetails)
                         console.log(user)
                         if(user[0].affiliation == "academic"){
-                            const result = axios.post('https://iai-v1.onrender.com/createacademy',{user:user}).then(res=>{
+                            console.log("inside academic")
+                            const result = axios.post('http://localhost:6080/createacademy',{user:user}).then(res=>{
                             console.log(res)
                             if(res.data.status=="success"){
                                 console.log("user creation successful")
-                                alert("Registration successful")
-                                axios.delete("https://iai-v1.onrender.com/deleteUser",{email:mail}).then(res=>{
-                                        console.log(res)
-                                    })
+                                toast.success("Registration successfully completed!")
+                                ///deleting the otp after the succesfull
+                                // axios.delete("http://localhost:6080/deleteOtp",{email:mail}).then(res=>{
+                                //         console.log(res)
+                                //     })
                                 localStorage.clear("userDetails")
 
-                                const result1 = axios.post('https://iai-v1.onrender.com/mailer', {
+                                const result1 = axios.post('http://localhost:6080/mailer', {
                             
                                 email:mail,
                                 subject:"Registration successful",
@@ -82,14 +88,46 @@ const OtpVerify = ()=>{
                                 if(res.data.status=="success"){
                                     console.log("mail sent successfully")
                                     
-
                                     window.location.href="samplelogin"
                                 }
                                 console.log('from the response of succesfull registeration', res);
                             })
                             }
                             else{
-                                alert("user creation failed")
+                                toast.error("user creation failed")
+                                localStorage.clear("userDetails")
+                            }
+                        })
+                    }
+                    else if(user[0].affiliation=='industry'){
+                        const result = axios.post('http://localhost:6080/createindustry',{user:user}).then(res=>{
+                            console.log(res)
+                            console.log("inside industry")
+                            if(res.data.status=="success"){
+                                console.log("user creation successful")
+                                toast.success("Registration successfully completed!")
+
+                                // axios.delete("http://localhost:6080/deleteOtp",{email:mail}).then(res=>{
+                                //         console.log(res)
+                                //     })
+                                localStorage.clear("userDetails")
+
+                                const result1 = axios.post('http://localhost:6080/mailer', {
+                            
+                                email:mail,
+                                subject:"Registration successful",
+                                content:"succesfully registered"
+                            }).then(res=>{
+                                if(res.data.status=="success"){
+                                    console.log("mail sent successfully")
+                                    
+                                    window.location.href="samplelogin"
+                                }
+                                console.log('from the response of succesfull registeration', res);
+                            })
+                            }
+                            else{
+                                toast.error("user creation failed")
                                 localStorage.clear("userDetails")
                             }
                         })
