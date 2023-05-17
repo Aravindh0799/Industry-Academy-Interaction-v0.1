@@ -1,19 +1,19 @@
 const mongoose = require('mongoose');
 
-const domainschema = new mongoose.Schema({
+const newschema = new mongoose.Schema({
     seq:{
         type:Number,
         required:true
     },
-    universityname:{
+    newsfeedurl:{
         type:String,
         required:true
     },
-    domain:{
+    title:{
         type:String,
         required:true
     }
 })
 
-const domain = mongoose.model('domains', domainschema);
-module.exports = domain;
+const news = mongoose.model('newss', newschema);
+module.exports = news;

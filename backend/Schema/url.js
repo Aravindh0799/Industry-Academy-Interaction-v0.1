@@ -1,19 +1,19 @@
 const mongoose = require('mongoose');
 
-const domainschema = new mongoose.Schema({
+const urlschema = new mongoose.Schema({
     seq:{
         type:Number,
         required:true
     },
-    universityname:{
+    url:{
         type:String,
         required:true
     },
-    domain:{
+    title:{
         type:String,
         required:true
     }
 })
 
-const domain = mongoose.model('domains', domainschema);
-module.exports = domain;
+const url = mongoose.model('urls', urlschema);
+module.exports = url;
