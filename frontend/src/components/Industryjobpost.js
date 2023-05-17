@@ -65,7 +65,7 @@ function Industryjobpost() {
       };
 
     }
-
+/**/ 
   return (
     <div className='outer-div'>
       <div class="nav-bar">

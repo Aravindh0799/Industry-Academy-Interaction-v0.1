@@ -19,7 +19,7 @@ import Activity from "./components/activitypage";
 import Profile from "./components/profilepage";
 import AdminPage from "./admin/Adminhome";
 import AdminNav from "./admin/AdminNav";
-/*/*/
+/*/*//**/ 
 
 function App() {
 

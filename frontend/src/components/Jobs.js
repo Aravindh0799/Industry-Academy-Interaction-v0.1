@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 // import "./css/style.css"
-// import "./css/bootstrap.min.css"
+// import "./css/bootstrap.min.css"/**/ 
 import Axios from 'axios';
 import Footer from './footer';
 
@@ -78,6 +78,7 @@ const render=   detail.map((job,val)=>{
       <>
         <div className="container-xxl bg-white p-0">
   {/* Header End */}
+
   <div className="container-xxl py-5 bg-dark page-header mb-5">
     <div className="container my-5 pt-5 pb-4">
       <h1 className="display-3 text-white mb-3 animated slideInDown">

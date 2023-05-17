@@ -36,3 +36,4 @@ const joblist= mongoose.Schema({
 
 const job=mongoose.model('joblist',joblist)
 module.exports=job
+/**/ 
