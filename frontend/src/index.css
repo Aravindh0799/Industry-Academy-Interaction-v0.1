@@ -219,3 +219,16 @@ button {
 }
 
 
+button.Toastify__close-button.Toastify__close-button--light{
+  /* background-color: #06173e; */
+  width: fit-content;
+  background-color: transparent;
+}
+
+button.chat-button{
+  padding:0;
+  color:white;
+  height: 45px;
+  border-radius: 60px;
+}
+

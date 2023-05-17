@@ -6,7 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-// toast.configure();
+// toast.configure(
+
+// );
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
@@ -84,13 +86,13 @@ useEffect(() => {
                       window.location.href="home";
                     }
                     else{
-                      toast.error('user not registered')
+                      toast.error('Enter correct credentials')
                       console.log('error')
                     }
 
                     window.localStorage.setItem("token", res);
                     window.localStorage.setItem('is logged in', "true");
-                    
+                    window.localStorage.setItem("affiliation","academy")
                 })
             }
             else if(res.data.message=='industry'){
@@ -110,13 +112,13 @@ useEffect(() => {
                   window.location.href="industry";
                 }
                 else{
-                  toast.error('user not registered')
+                  toast.error("Enter correct credentials");
                   console.log('error')
                 }
 
                 window.localStorage.setItem("token", res);
                 window.localStorage.setItem('is logged in', "true");
-                
+                window.localStorage.setItem("affiliation","industry")
             })
             }
             else{
@@ -196,7 +198,7 @@ useEffect(() => {
             <a href="forgotpassword">Forgot password?</a>
           </p>
           </div>
-          <button type="submit" >Submit</button>
+          <button class="submit-button" type="submit" >Submit</button>
         </form>
       </div>
       </div>

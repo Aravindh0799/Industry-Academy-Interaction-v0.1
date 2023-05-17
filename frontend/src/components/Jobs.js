@@ -3,7 +3,7 @@ import React,{useState,useEffect} from 'react'
 // import "./css/bootstrap.min.css"/**/ 
 import Axios from 'axios';
 import Footer from './footer';
-
+import Navbar1 from './Navbar1';
 
 const Jobs =()=>{
   const [detail,setdetail]=useState([])
@@ -76,6 +76,7 @@ const render=   detail.map((job,val)=>{
 
     return(
       <>
+      <Navbar1></Navbar1>
         <div className="container-xxl bg-white p-0">
   {/* Header End */}
 
@@ -128,7 +129,7 @@ const render=   detail.map((job,val)=>{
 
             <div className="job-item p-4 mb-4">
               <div className="row g-4">
-                <div className="col-sm-12 col-md-8 d-flex align-items-center">
+                {/* <div className="col-sm-12 col-md-8 d-flex align-items-center">
                   <img
                     className="flex-shrink-0 img-fluid border rounded"
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgHHSeJEgJEdQ7-T8Rd18sDatEyRbb40yWfZCjUSEjXA&s"
@@ -169,7 +170,7 @@ const render=   detail.map((job,val)=>{
                     <i className="far fa-calendar-alt text-primary me-2" />
                     Date Line: 17-5-2023
                   </small>
-                </div>
+                </div> */}
               </div>
             </div>
             <div>{render}</div>
@@ -183,7 +184,7 @@ const render=   detail.map((job,val)=>{
               href="#"
               className="btn btn-lg btn-primary btn-lg-square back-to-top"
             >
-              <i className="bi bi-arrow-up" />
+              <i className="fa-solid fa-arrow-up" />
             </a>
           </div>
         </div>

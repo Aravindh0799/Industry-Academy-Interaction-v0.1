@@ -19,11 +19,14 @@ import Activity from "./components/activitypage";
 import Profile from "./components/profilepage";
 import AdminPage from "./admin/Adminhome";
 import AdminNav from "./admin/AdminNav";
+import Chatbot from './chatbot/chatbot';
+import Child from './child'
 /*/*//**/ 
 
 function App() {
 
   return (
+    <div>
     <Routes>
     <Route path="/register" element={<Register />} />
     <Route path="/login" element={<Login />} />
@@ -39,12 +42,14 @@ function App() {
     <Route path='/profile' element={<Profile/>}/>
     <Route path='/activitypage' element={<Activity/>}/>
     <Route path='/industrypost' element={<Industryjobpost/>}/>
-
+    <Route path='/chatbot' element={<Chatbot/>}></Route>
     <Route path='/admin' element={<AdminPage/>}></Route>
     <Route path='/adminnav' element={<AdminNav/>}></Route>
     <Route path="/jobs" element={<Jobs />} />
 
   </Routes>
+  <Child/>
+  </div>
   );
 }
 

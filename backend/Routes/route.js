@@ -1,3 +1,5 @@
+
+
 const express = require('express')
 const router = express.Router()
 const academy = require('../Schema/academy')
@@ -14,6 +16,8 @@ router.post('/', async(req, res)=>{
     console.log('hello user')
     res.send('hello world')
 })
+
+
 router.get('/getalljob',async(req,res)=>{
     console.log('from the getall api');
     const user=await job.find();
@@ -288,14 +292,26 @@ router.post('/login', async(req, res)=>{
     const academy_user = await academy.findOne({email});
     if(academy_user){
         res.json({
-            message:"true"
+            status:"success",
+            message:"academy"
         })
     }
-    else{
-        res.json({
-            message:"false"
-        })
+    else {
+        const industry_user = industry.findOne({email});
+        if(industry_user){
+            res.json({
+                status:"success",
+                message:"industry"
+            })
+        }
+        else{
+            res.json({
+                status:"failure",
+                error:"no user registered"
+            })
+        }
     }
+    
 
 }),
 
@@ -321,7 +337,7 @@ router.post('/login_academy',async(req, res)=>{
                 return res.json({
                     status:"success for academy",
                     data:token,
-                    name:olduser.name
+                    name:olduser.name,
                 })
             }
             else{
@@ -359,7 +375,8 @@ router.post('/login_industry', async(req, res)=>{
             if(res.status(201)){
                 return res.json({
                     status:"success for industry",
-                    data:token
+                    data:token,
+                    name:olduser.name
                 })
             }
             else{
@@ -450,7 +467,7 @@ router.post('/forgetpassword', async(req, res)=>{
                 const secret =  JWT_SECRET + user.password;
                 const token = jwt.sign({email:user.email, id:user._id},secret );
                 const flag = user.affiliation;
-                const link = `https://iai-v1.onrender.com/resetpassword/${user._id}/${flag}/${token}`;
+                const link = `http://localhost:6080/resetpassword/${user._id}/${flag}/${token}`;
                 console.log(link);
                 //nodemailer
                 res.send({
@@ -462,8 +479,8 @@ router.post('/forgetpassword', async(req, res)=>{
             const secret =  JWT_SECRET + olduser.password;
             const token = jwt.sign({email:olduser.email, id:olduser._id},secret );
             const flag = olduser.affiliation;
-            // res.render(`https://iai-v1.onrender.com/reset/${olduser._id}/${token}`);
-            const link = `https://iai-v1.onrender.com/resetpassword/${olduser._id}/${flag}/${token}`;
+            // res.render(`http://localhost:6080/reset/${olduser._id}/${token}`);
+            const link = `http://localhost:6080/resetpassword/${olduser._id}/${flag}/${token}`;
             console.log(link);
             //nodemailer
             res.send({
@@ -503,7 +520,7 @@ router.post('/forgot',async(req,res)=>{
         const secret = JWT_SECRET+olduser.password;
             const token = jwt.sign({email:olduser.email, id:olduser._id},JWT_SECRET );
 
-            const transfer = `https://iai-version-1-aravindh0799.vercel.app/reset/${token}/${olduser._id}`;
+            const transfer = `http://localhost:3000/reset/${token}/${olduser._id}`;
             res.send({
                 status:"success",
                 token:token,
@@ -747,3 +764,9 @@ router.post('/find-username',async(req,res)=>{
 
 
 module.exports = router
+
+
+
+
+
+
