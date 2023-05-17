@@ -36,6 +36,15 @@ class ActionProvider {
     this.updateChatbotState(Message)
    }
 
+   thankyou(){
+    const Message = this.createChatBotMessage("Thank you, Have a great day!")
+    this.updateChatbotState(Message)
+   }
+
+   default(){
+    const Message = this.createChatBotMessage("Sorry! I can't understand.")
+    this.updateChatbotState(Message)
+   }
    updateChatbotState(message){
     this.setState(prevState =>({
         ...prevState, messages:[...prevState.messages, message]

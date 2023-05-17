@@ -19,6 +19,12 @@ class MessageParser {
         else if(lowerCaseMessage.includes("do")){
             this.actionProvider.do();
         }
+        else if(lowerCaseMessage.includes("thank")){
+            this.actionProvider.thankyou();
+        }
+        else{
+            this.actionProvider.default();
+        }
     }
   }
   

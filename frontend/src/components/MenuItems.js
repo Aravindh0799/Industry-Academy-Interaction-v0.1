@@ -4,7 +4,7 @@ let name = localStorage.getItem('uname')
 export const MenuItemsforAcademy = [
     {
         title : "Home",
-        url : "#",
+        url : "/",
         cName : "nav-links",
         icon : "fa-solid fa-house-user "
     },
@@ -50,7 +50,7 @@ export const MenuItemsforAcademy = [
 export const MenuItemsforIndustry = [
     {
         title : "Home",
-        url : "#",
+        url : "/industry",
         cName : "nav-links",
         icon : "fa-solid fa-house-user "
     },

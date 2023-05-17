@@ -17,7 +17,7 @@ function NewsFeed() {
   }, []);*/
   useEffect(() => {
     setShowNews(false); // set the showNews state to false while the news is updating
-    axios.get('https://newsapi.org/v2/top-headlines?country=in&apiKey=7b7e138524fd43fbaa90e29e2318674f')
+    axios.get('https://newsapi.org/v2/top-headlines?country=in&apiKey=7b7e138524fd43fbaa90e29e2318674f&pageSize=8')
       .then(response => {
         setNews(response.data.articles);
         setShowNews(true); // set the showNews state to true when the news update is completed
