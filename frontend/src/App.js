@@ -21,6 +21,9 @@ import AdminPage from "./admin/Adminhome";
 import AdminNav from "./admin/AdminNav";
 import Chatbot from './chatbot/chatbot';
 import Child from './child'
+import ModalForm from "./components/ProfileModal";
+import NewProfile from "./components/NewProfile";
+import MainProfile from "./components/EditProfile";
 /*/*//**/ 
 
 function App() {
@@ -39,14 +42,15 @@ function App() {
     <Route path='/footer' element={<Footer/>} />
     <Route path='/otpverify' element={<OtpVerify/>}/>
     <Route path='/industry' element={<Industryhome/>}/>
-    <Route path='/profile' element={<Profile/>}/>
+    <Route path='/profile' element={<MainProfile/>}/>
     <Route path='/activitypage' element={<Activity/>}/>
     <Route path='/industrypost' element={<Industryjobpost/>}/>
     <Route path='/chatbot' element={<Chatbot/>}></Route>
     <Route path='/admin' element={<AdminPage/>}></Route>
     <Route path='/adminnav' element={<AdminNav/>}></Route>
     <Route path="/jobs" element={<Jobs />} />
-
+    {/* <Route path="/newprofile" element={<ModalForm />} /> */}
+    <Route path="/prof" element={<NewProfile />} />
   </Routes>
   <Child/>
   </div>
