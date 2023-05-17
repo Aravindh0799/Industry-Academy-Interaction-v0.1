@@ -229,6 +229,10 @@ button.chat-button{
   padding:0;
   color:white;
   height: 45px;
+  margin-right: 16px;
   border-radius: 60px;
 }
 
+.react-chatbot-kit-chat-btn-send{
+  border-radius: 0px 0px 60px 0px;
+}
