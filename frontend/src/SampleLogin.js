@@ -83,7 +83,7 @@ useEffect(() => {
                       console.log('hi')
                       localStorage.setItem("userName",res.data.name)
                       toast.success("Login Successful")
-                      window.location.href="home";
+                      window.location.href="academy";
                     }
                     else{
                       toast.error('Enter correct credentials')

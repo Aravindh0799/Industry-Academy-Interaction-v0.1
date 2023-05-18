@@ -6,7 +6,8 @@ import "../home.css";
 import Navbar1 from './Navbar1';
 import Footer from './footer';
 import "./industrypostjob.css";
-
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -43,7 +44,10 @@ function Industryjobpost() {
             company:company
         }).then(res=>{
             console.log('Got the Response : ',res.data);
-            alert('successfully registered')
+            toast.success("Successfully posted")
+            // alert('successfully registered')
+            setTimeout(4000);
+            window.location.href="industrypost"
         }).catch((e)=>{
             console.log('Error occured ', e);
         })
@@ -71,7 +75,7 @@ function Industryjobpost() {
       <div class="nav-bar">
         <Navbar1></Navbar1>
        </div>
-    
+        <ToastContainer/>
       <br></br>
       <br></br>
       <br></br>

@@ -5,15 +5,15 @@ import Register from './Register';
 import Login from './Login';
 import Sample from './SampleLogin';
 import Home from './home';
+import Academy from './components/academyhome';
+import Industry from "./components/industryhome";
 import Reset from './components/reset';
 import Forget from './components/forgetpassword';
-import Academy from './components/academyhome';
 import Navbar1 from "./components/Navbar1";
 import Footer from "./components/footer";
 import OtpVerify from "./components/OtpVerify";
 import Jobs from "./components/Jobs";
 
-import Industryhome from "./components/industryhome";
 import Industryjobpost from "./components/Industryjobpost";
 import Activity from "./components/activitypage";
 import Profile from "./components/profilepage";
@@ -36,12 +36,12 @@ function App() {
     <Route path="/samplelogin" element={< Sample/>}/>
     <Route path='/reset/:token/:id' element={<Reset/>} />
     <Route path='/forgotpassword' element={<Forget/>} />
-    <Route path='/home' element={<Home/>} />
-    <Route path='/' element={<Academy/>} />
+    <Route path='/' element={<Home/>} />
+    <Route path='/academy' element={<Academy/>} />
+    <Route path='/industry' element={<Industry/>}/>
     <Route path='/navbar' element={<Navbar1/>} />
     <Route path='/footer' element={<Footer/>} />
     <Route path='/otpverify' element={<OtpVerify/>}/>
-    <Route path='/industry' element={<Industryhome/>}/>
     <Route path='/profile' element={<MainProfile/>}/>
     <Route path='/activitypage' element={<Activity/>}/>
     <Route path='/industrypost' element={<Industryjobpost/>}/>

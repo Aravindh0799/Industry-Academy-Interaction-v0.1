@@ -1,7 +1,7 @@
 import {useState,useEffect,React} from "react";
 import './Otpverify.css'
 import axios from '../api/axios';
-import {toast} from 'react-toastify';
+import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -145,7 +145,9 @@ const OtpVerify = ()=>{
     return(
         <>
         {
+            
             <div class="otp-container h-screen bg-blue-500 py-20 px-3">
+                <ToastContainer/>
             <div class="container mx-auto">
                 <div class="max-w-sm mx-auto md:max-w-lg">
                     <div class="w-full">

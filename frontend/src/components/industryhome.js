@@ -24,7 +24,7 @@ function academyhome() {
             <div class="col-md-12" >
                           <div class="row" >
             <div class="col-md-7">
-              <h1><b>The Chamber</b></h1>
+              <h1><b>Happenings in Industry!</b></h1>
                 <div class="demo-content" style={{textAlign:'justify',fontSize:'18px'}}>
                                 <p style={{textAlign:'justify'}}>Founded in 1925, Indian Chamber of Commerce (ICC) is the leading and only National Chamber of 
                                 Commerce having headquarter in Kolkata, and one of the most pro-active and forward-looking Chambers in the country today. Its membership spans some of the most prominent and major industrial groups in India.ICC’s forte is its ability to anticipate the needs of the future, respond to challenges, and prepare the stakeholders in the economy to benefit from these changes and opportunities. Set up by a group of pioneering industrialists led by Mr G D Birla, the Indian Chamber of Commerce was closely associated with the Indian Freedom Movement, as the first organised voice of indigenous Indian Industry.</p>

@@ -4,6 +4,9 @@ import React,{useState,useEffect} from 'react'
 import Axios from 'axios';
 import Footer from './footer';
 import Navbar1 from './Navbar1';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Jobs =()=>{
   const [detail,setdetail]=useState([])
@@ -21,14 +24,16 @@ const Jobs =()=>{
     })
   }, []);
 
-  const handleApply =(postedby, id)=>{
+  const handleApply =(postedby, desg, city)=>{
     const user = localStorage.getItem('userMail');
-    console.log('from the apply check', user,id, postedby);
-    alert('please your resume in profile'); 
+    console.log('from the apply check', user,desg, postedby, city);
+    // alert('please your resume in profile'); 
+    toast.success("Successfully applied!")
     Axios.post('http://localhost:6080/mailer',{
       email:postedby,
       subject:"user applied",
-      content:`${user} has applied for the job you have posted. job id:${id}`
+      content:`${user} has applied for the job that you have posted - Job designation:${desg},
+City:  ${city}`
       
     }).then(res=>{
       console.log(res.data.status);
@@ -71,7 +76,7 @@ const Jobs =()=>{
                   <div className="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                     <div className="d-flex mb-3">
                      
-                      <a onClick={()=>{handleApply(job.postedby, job._id)}} className="btn btn-primary" href="#">
+                      <a onClick={()=>{handleApply(job.postedby, job.designation, job.city)}} className="btn btn-primary" href="#">
                         Apply Now
                       </a>
                     </div>
@@ -93,7 +98,7 @@ const Jobs =()=>{
       <Navbar1></Navbar1>
         <div className="container-xxl bg-white p-0">
   {/* Header End */}
-
+      <ToastContainer/>
   <div className="container-xxl py-5 bg-dark page-header mb-5">
     <div className="container my-5 pt-5 pb-4">
       <h1 className="display-3 text-white mb-3 animated slideInDown">
