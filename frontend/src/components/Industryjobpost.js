@@ -24,13 +24,16 @@ function Industryjobpost() {
     const navigate=useNavigate();
     const handlesubmit= (e)=>
     {
-        e.preventDefault();
-        var today = new window.Date();
-        setDate(today.getDate()+ '-' + (today.getMonth() + 1) + '-' + today.getFullYear())
+      e.preventDefault();
+      var today = new window.Date();
+      setDate(today.getDate()+ '-' + (today.getMonth() + 1) + '-' + today.getFullYear())
+
+      const mail = localStorage.getItem('userMail');
+      console.log('from the job post check',mail)
 
         Axios.post('http://localhost:6080/job_post',{
             designation:designation,
-            description:description,
+            postedby:mail,
             city:city,
             jobtype:workingtime,
             startingsalary:startingsalary,
@@ -38,9 +41,6 @@ function Industryjobpost() {
             image:image,
             date:Date,
             company:company
-
-            
-
         }).then(res=>{
             console.log('Got the Response : ',res.data);
             alert('successfully registered')

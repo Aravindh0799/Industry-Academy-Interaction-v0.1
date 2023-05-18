@@ -32,6 +32,10 @@ const academySchema = new mongoose.Schema({
     dept:{
         type:String,
         required:true
+    },
+    resume:{
+        type:String,
+        required:true
     }
 })
 

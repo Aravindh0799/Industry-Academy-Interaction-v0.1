@@ -21,7 +21,21 @@ const Jobs =()=>{
     })
   }, []);
 
-const render=   detail.map((job,val)=>{
+  const handleApply =(postedby, id)=>{
+    const user = localStorage.getItem('userMail');
+    console.log('from the apply check', user,id, postedby);
+    alert('please your resume in profile'); 
+    Axios.post('http://localhost:6080/mailer',{
+      email:postedby,
+      subject:"user applied",
+      content:`${user} has applied for the job you have posted. job id:${id}`
+      
+    }).then(res=>{
+      console.log(res.data.status);
+    })
+  }
+
+  const render=   detail.map((job,val)=>{
             return(
                 <div className="job-item p-4 mb-4">
                 <div className="row g-4">
@@ -57,7 +71,7 @@ const render=   detail.map((job,val)=>{
                   <div className="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                     <div className="d-flex mb-3">
                      
-                      <a className="btn btn-primary" href="">
+                      <a onClick={()=>{handleApply(job.postedby, job._id)}} className="btn btn-primary" href="#">
                         Apply Now
                       </a>
                     </div>
