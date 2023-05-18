@@ -33,15 +33,6 @@ const ProfilePage =({openModal}) =>{
                     <b>Web Developer at Microsoft & Also work as freelancer on Fiverr and Upwork and Founder of <a
                             href="https://www.freecodebox.com/">freecodebox</a> tech agency </b>
                     <p>Pakistan, Australia (Head Office) &middot; <a href="#">Contact Info</a></p>
-
-                    <div className="mutual-connection">
-                        <img src={user2}/>
-                        <span>2 mutual connection: Jack Sparrow</span>
-                    </div>
-                    <div className="profile-btn">
-                        <a href="#" id="primary-btn"><img src={connectImg}/> Connect</a>
-                        <a href="#"><img src={chatImg}/> Message</a>
-                    </div>
                 </div>
                 <div className='edit-btn-container'>
                 <BsFillPencilFill className="edit-btn" onClick={openModal}/>

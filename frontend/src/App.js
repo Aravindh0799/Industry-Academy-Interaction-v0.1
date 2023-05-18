@@ -49,8 +49,7 @@ function App() {
     <Route path='/admin' element={<AdminPage/>}></Route>
     <Route path='/adminnav' element={<AdminNav/>}></Route>
     <Route path="/jobs" element={<Jobs />} />
-    {/* <Route path="/newprofile" element={<ModalForm />} /> */}
-    <Route path="/prof" element={<NewProfile />} />
+    <Route path="/newprofile" element={<NewProfile />} />
   </Routes>
   <Child/>
   </div>

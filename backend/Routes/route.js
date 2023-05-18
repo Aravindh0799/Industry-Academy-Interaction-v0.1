@@ -10,6 +10,7 @@ const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken')
 const otp = require('otp-generator')
 const job=require('../Schema/jobs')
+const Profile=require('../Schema/Profile')
 const JWT_SECRET = "ciwbuconciwevccwu1229238c/idb871cb91383hc}28vwrgbw8b748{62[]()68cwv";
 
 router.post('/', async(req, res)=>{
@@ -600,6 +601,20 @@ router.post('/updatepass', async(req, res)=>{
         }
     }
 })
+
+// ============================ PROFILE PAGE API CALLS====================================
+
+router.post('/insertprofile', async (req, res) => {
+    try {
+      const profileData = req.body;
+      const profile = new Profile(profileData);
+      const savedProfile = await profile.save();
+      res.status(201).json(savedProfile); 
+    } catch (error) {
+      res.status(500).json({ error: 'An error occurred while saving the profile.' });
+    }
+  });
+  
 
 
 ///////==============================================

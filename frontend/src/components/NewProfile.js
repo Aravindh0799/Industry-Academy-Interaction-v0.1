@@ -15,18 +15,14 @@ function NewProfile() {
       setModalOpen(true);
     },[])
   return (
-    // ReactDOM.createPortal(
-    
     <div className='App-new'>
         <Academy></Academy>
         {modalOpen && <ModalForm closeModal={() => {
      setModalOpen(false); 
      setRowToEdit(null);
-    }}/>}
+    }} rowToEdit={rowToEdit}/>}
         
     </div> 
-  //   ,document.querySelector("#modal"))
-    
   );
 }
 

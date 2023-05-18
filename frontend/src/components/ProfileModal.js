@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import Axios  from "axios";
 
-const ModalForm = ({ closeModal }) =>{
+const ModalForm = ({ closeModal , rowToEdit }) =>{
 
   const [name,setName] = useState('')
   const [bio, setBio] = useState('');
@@ -13,8 +13,29 @@ const ModalForm = ({ closeModal }) =>{
   const [errors, setErrors] = useState('');
   const[modalOpen,setModalOpen] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+  const profileData = {
+    name: name,
+    bio: bio,
+    about: about,
+    experience: experience,
+    education: education,
+    skills: skills.split(',').map((skill) => skill.trim()),
+    languages: languages.split(',').map((lang) => lang.trim()),
+  };
+
+  try {
+    let response;
+    if (rowToEdit === null) {
+      const response = await Axios.post('http://localhost:6080/insertprofile', profileData);
+      console.log('Profile saved successfully:', response.data);
+    } else {
+    }
+    
+  } catch (error) {
+    console.error('An error occurred while saving the profile:', error);
+  }
     closeModal();
   };
 
