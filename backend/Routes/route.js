@@ -606,14 +606,47 @@ router.post('/updatepass', async(req, res)=>{
 
 router.post('/insertprofile', async (req, res) => {
     try {
-      const profileData = req.body;
-      const profile = new Profile(profileData);
-      const savedProfile = await profile.save();
-      res.status(201).json(savedProfile); 
+      const profileData = {
+        bio: req.body.bio,
+        about: req.body.about,
+        experience: req.body.experience,
+        education: req.body.education,
+        skills: req.body.skills,
+        languages: req.body.languages,
+      };
+      const email = req.body.email;
+  
+      const updatedProfile = await academy.updateOne({ email: email }, profileData);
+  
+      if (updatedProfile) {
+        res.status(201).json({ message: 'Profile updated successfully.' });
+      } else {
+        res.status(500).json({ error: 'An error occurred while updating the profile.' });
+      }
     } catch (error) {
-      res.status(500).json({ error: 'An error occurred while saving the profile.' });
+      console.log('Error in updating the profile details:', error);
     }
   });
+  
+
+  router.post('/fetchProfileData', async (req, res) => {
+    try {
+      const email = req.body.email;
+      const profile = await academy.findOne({ email: email });
+      if (!profile) {
+        return res.status(404).json({ error: 'Profile not found' });
+      }
+      res.json(profile);
+    } catch (error) {
+      console.error('An error occurred while fetching the profile:', error);
+      res.status(500).json({ error: 'An error occurred while fetching the profile' });
+    }
+  });
+  
+
+
+///////==============================================
+
   
 
 

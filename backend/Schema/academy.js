@@ -33,6 +33,24 @@ const academySchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    bio:{
+        type:String,
+    },
+    about:{
+        type:String,
+    },
+    experience:{
+        type:String,
+    },
+    education:{
+        type:String,
+    },
+    skills:{
+        type:[String]
+    },
+    languages:{
+        type:[String]
+    }
 })
 
 

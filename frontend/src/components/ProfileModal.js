@@ -15,18 +15,18 @@ const ModalForm = ({ closeModal , rowToEdit }) =>{
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const email = localStorage.getItem("userMail")
   const profileData = {
-    name: name,
     bio: bio,
     about: about,
     experience: experience,
     education: education,
     skills: skills.split(',').map((skill) => skill.trim()),
     languages: languages.split(',').map((lang) => lang.trim()),
+    email:email
   };
 
   try {
-    let response;
     if (rowToEdit === null) {
       const response = await Axios.post('http://localhost:6080/insertprofile', profileData);
       console.log('Profile saved successfully:', response.data);
