@@ -750,17 +750,22 @@ router.post('/find-username',async(req,res)=>{
         const otheruser = await academy.findOne({email:email});
         if(otheruser){
             const name = otheruser.name;
+            const college = otheruser.university;
             console.log('from the academy api',name);
             return res.json({
-                uname : `${name}` 
+                uname : `${name}`,
+                collegeName: `${college}`,
+                resume:otheruser.resume
             })
         }else{
             const olduser =await industry.findOne({email:email});
             if(olduser){
                 const name = olduser.name;
+                const company = olduser.companyname
                 console.log('from the api',name);
                 return res.json({
-                uname : `${name}`
+                uname : `${name}`,
+                companyname: `${company}`
                 })
             }
             else{

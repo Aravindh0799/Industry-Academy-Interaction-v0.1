@@ -27,9 +27,11 @@ import MainProfile from "./components/EditProfile";
 /*/*//**/ 
 
 function App() {
-
+  const loggedin = localStorage.getItem("is logged in");
   return (
+    
     <div>
+      
     <Routes>
     <Route path="/register" element={<Register />} />
     <Route path="/login" element={<Login />} />
@@ -37,19 +39,19 @@ function App() {
     <Route path='/reset/:token/:id' element={<Reset/>} />
     <Route path='/forgotpassword' element={<Forget/>} />
     <Route path='/' element={<Home/>} />
-    <Route path='/academy' element={<Academy/>} />
-    <Route path='/industry' element={<Industry/>}/>
+    <Route path='/academy' element={loggedin=="true"?<Academy/>:<Home/>} />
+    <Route path='/industry' element={loggedin=="true"?<Industry/>:<Home/>}/>
     <Route path='/navbar' element={<Navbar1/>} />
     <Route path='/footer' element={<Footer/>} />
     <Route path='/otpverify' element={<OtpVerify/>}/>
     <Route path='/profile' element={<MainProfile/>}/>
     <Route path='/activitypage' element={<Activity/>}/>
-    <Route path='/industrypost' element={<Industryjobpost/>}/>
-    <Route path='/chatbot' element={<Chatbot/>}></Route>
-    <Route path='/admin' element={<AdminPage/>}></Route>
+    <Route path='/industrypost' element={loggedin=="true"?<Industryjobpost/>:<Home/>}/>
+    <Route path='/chatbot' element={loggedin=="true"?<Chatbot/>:<Home/>}></Route>
+    <Route path='/admin' element={loggedin=="true"?<AdminPage/>:<Home/>}></Route>
     <Route path='/adminnav' element={<AdminNav/>}></Route>
-    <Route path="/jobs" element={<Jobs />} />
-    <Route path="/newprofile" element={<NewProfile />} />
+    <Route path="/jobs" element={loggedin=="true"?<Jobs />:<Home/>} />
+    <Route path="/newprofile" element={loggedin=="true"?<NewProfile />:<Home/>} />
   </Routes>
   <Child/>
   </div>

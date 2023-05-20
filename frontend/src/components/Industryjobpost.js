@@ -27,14 +27,27 @@ function Industryjobpost() {
     {
       e.preventDefault();
       var today = new window.Date();
+      
+
       setDate(today.getDate()+ '-' + (today.getMonth() + 1) + '-' + today.getFullYear())
 
       const mail = localStorage.getItem('userMail');
       console.log('from the job post check',mail)
 
+        Axios.post('http://localhost:6080/find-username',{
+          email:mail
+        }).then(res=>{
+          console.log(res.data.companyname)
+          const comp = res.data.companyname
+          setCompany(comp)
+          console.log(company)
+          console.log(Date)
+        })
+
         Axios.post('http://localhost:6080/job_post',{
             designation:designation,
             postedby:mail,
+            description: description,
             city:city,
             jobtype:workingtime,
             startingsalary:startingsalary,
@@ -86,7 +99,7 @@ function Industryjobpost() {
       
          <Container className='outer-container'>
         <center><br/>
-        <br/>Job details</center>
+        <br/><h1>Job details</h1></center>
         <br/>
         <br/>
         <input onChange={(e)=>{setDesignation(e.target.value)}} value={designation} placeholder='Designation:'/>
@@ -110,8 +123,8 @@ function Industryjobpost() {
         <input onChange={(e)=>{setStartingsalary(e.target.value)}} value={startingsalary} placeholder='startingsalary'/>
         <br/><br/>
         <input onChange={(e)=>{setEndingsalary(e.target.value)}} value={endingsalary} placeholder='endingsalary'/>
-        <br/><br/>
-        <input onChange={(e)=>{setCompany(e.target.value)}} value={company} placeholder='companyname'/>
+        {/* <br/><br/>
+        <input onChange={(e)=>{setCompany(e.target.value)}} value={company} placeholder='companyname'/> */}
         <br/><br/>
         UPLOAD IMAGE:<br></br><input onChange={convertToBase64} type ="file" accept='image/*' placeholder='uploag image'/>
         {image==""||image==null?"": <img width={50} height={100} src={image}/>}

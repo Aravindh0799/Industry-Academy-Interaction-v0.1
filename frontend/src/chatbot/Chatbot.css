@@ -2,6 +2,7 @@
     width: 100%;
     display: flex;
     flex-direction: row;
+    padding: 0px;
 }
 /* 
 .learning-options-container{
@@ -23,3 +24,13 @@
     margin: 3px;
     width: 145px;
 }
+
+.App{
+    float: right;
+}
+/* 
+@media screen and (max-width: 970px) {
+    .App{
+        float: right;
+    }
+} */
