@@ -52,10 +52,9 @@ function App() {
     <Route path='/chatbot' element={loggedin=="true"?<Chatbot/>:<Home/>}></Route>
     <Route path='/admin' element={loggedin=="true"?<AdminPage/>:<Home/>}></Route>
     <Route path='/adminnav' element={<AdminNav/>}></Route>
-    <Route path="/jobs" element={loggedin=="true"?<Jobs />:<Home/>} />
+    <Route path="/jobs" element={loggedin=="true"?<Newupload />:<Home/>} />
     <Route path="/newprofile" element={loggedin=="true"?<NewProfile />:<Home/>} />
 
-    <Route path="/jobstest" element={loggedin=="true"?<Newupload />:<Home/>} />
   </Routes>
   <Child/>
   </div>
