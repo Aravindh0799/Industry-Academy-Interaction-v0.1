@@ -50,6 +50,10 @@ const academySchema = new mongoose.Schema({
     },
     languages:{
         type:[String]
+    },
+    resume:{
+        type:Buffer,
+        contentType:String
     }
 })
 

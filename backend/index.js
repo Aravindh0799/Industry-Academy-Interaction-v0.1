@@ -18,6 +18,9 @@ app.use(route)
 const basics = require('./Routes/basics')
 app.use(basics)
 
+const sample = require('./Routes/sample');
+app.use(sample)
+
 app.listen(port,()=>{
     console.log(`server running at port ${port} `);
 })
