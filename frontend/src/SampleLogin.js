@@ -50,9 +50,14 @@ useEffect(() => {
     
     e.preventDefault();
     console.log(email)
-    const v2 = PWD_REGEX.test(password);
+    // const v2 = PWD_REGEX.test(password);
     const v3 = EMAIL_REGEX.test(email);
-    if (!v2 || !v3) {
+
+    if(!v3){
+      toast.error("Please enter a valid mail ID")
+    }
+
+    if (!v3) {
       setErrMsg("Invalid Entry");
       return;
   }
@@ -86,7 +91,7 @@ useEffect(() => {
                       window.location.href="academy";
                     }
                     else{
-                      toast.error('Enter correct credentials')
+                      toast.error('Please enter Valid Credentials')
                       console.log('error')
                     }
 
@@ -112,7 +117,7 @@ useEffect(() => {
                   window.location.href="industry";
                 }
                 else{
-                  toast.error("Enter correct credentials");
+                  toast.error("Please enter Valid Credentials");
                   console.log('error')
                 }
 
@@ -153,7 +158,7 @@ useEffect(() => {
             Email:
             <FontAwesomeIcon icon={faCheck} className={validEmail ? "valid" : "hide"} />
             <FontAwesomeIcon icon={faTimes} className={validEmail || !email ? "hide" : "invalid"} />
-            <input type="email" 
+            <input type="text" 
             name="email" 
             value={email} 
             onChange={handleEmailChange}
@@ -161,13 +166,14 @@ useEffect(() => {
             aria-describedby="uidnote" 
             onFocus={() => setEmailFocus(true)}
             onBlur={() => setEmailFocus(false)}
+            formnovalidate="formnovalidate" 
             />
           </label>
-          <p id="uidnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
+          {/* <p id="uidnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             '@' symbol missing.<br />
                             Enter a valid Email address.<br />
-                        </p>
+                        </p> */}
           <label>
             Password:
             <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
@@ -182,12 +188,12 @@ useEffect(() => {
             onBlur={() => setPwdFocus(false)} 
             onChange={handlePasswordChange}/>
           </label>
-          <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
+          {/* <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             8 to 24 characters.<br />
                             Must include uppercase and lowercase letters, a number and a special character.<br />
                             Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
-                        </p>
+                        </p> */}
           <br/>
           <div class="links">
           <p>
