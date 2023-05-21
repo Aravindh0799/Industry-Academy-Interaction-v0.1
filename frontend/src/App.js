@@ -24,7 +24,8 @@ import Child from './child'
 import ModalForm from "./components/ProfileModal";
 import NewProfile from "./components/NewProfile";
 import MainProfile from "./components/EditProfile";
-import Uploadpdf from './components/uploadpdf';
+
+import Newupload from "./admin/newUpload"
 /*/*//**/ 
 
 function App() {
@@ -53,7 +54,8 @@ function App() {
     <Route path='/adminnav' element={<AdminNav/>}></Route>
     <Route path="/jobs" element={loggedin=="true"?<Jobs />:<Home/>} />
     <Route path="/newprofile" element={loggedin=="true"?<NewProfile />:<Home/>} />
-    <Route path="/uploadpdf" element={loggedin=="true"?<Uploadpdf />:<Home/>} />
+
+    <Route path="/jobstest" element={loggedin=="true"?<Newupload />:<Home/>} />
   </Routes>
   <Child/>
   </div>
