@@ -5,7 +5,7 @@ const domainschema = new mongoose.Schema({
         type:Number,
         required:true
     },
-    universityname:{
+    name:{
         type:String,
         required:true
     },

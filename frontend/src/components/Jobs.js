@@ -26,9 +26,12 @@ const Jobs =()=>{
 
   const handleApply =(postedby, desg, city)=>{
     const user = localStorage.getItem('userMail');
-    
+    localStorage.setItem('postedby', postedby);
+    localStorage.setItem('city', city);
+    localStorage.setItem('desg', desg);
     console.log('from the apply check', user,desg, postedby, city);
 
+    window.location.href = 'uploadpdf';
     // alert('please your resume in profile');
     // if(resume==''){
     //   toast.error('please update your profile with resume');
@@ -36,16 +39,17 @@ const Jobs =()=>{
     // }
     // else{
       // }
-        toast.success("Successfully applied!")
-    Axios.post('http://localhost:6080/mailer',{
-      email:postedby,
-      subject:"user applied",
-      content:`${user} has applied for the job that you have posted - Job designation:${desg},
-City:  ${city}`
       
-    }).then(res=>{
-      console.log(res.data.status);
-    })
+        // toast.success("Successfully applied!")
+//     Axios.post('http://localhost:6080/mailer',{
+//       email:postedby,
+//       subject:"user applied",
+//       content:`${user} has applied for the job that you have posted - Job designation:${desg},
+// City:  ${city}`
+      
+//     }).then(res=>{
+//       console.log(res.data.status);
+//     })
   }
 
   const render=   detail.map((job,val)=>{

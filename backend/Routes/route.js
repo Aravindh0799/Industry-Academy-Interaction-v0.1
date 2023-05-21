@@ -637,6 +637,7 @@ router.post('/insertprofile', async (req, res) => {
         return res.status(404).json({ error: 'Profile not found' });
       }
       res.json(profile);
+      console.log(profile)
     } catch (error) {
       console.error('An error occurred while fetching the profile:', error);
       res.status(500).json({ error: 'An error occurred while fetching the profile' });

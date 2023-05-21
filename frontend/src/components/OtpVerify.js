@@ -27,8 +27,8 @@ const OtpVerify = ()=>{
             if(res.data.status=="success"){
             axios.post('http://localhost:6080/mailer',{
                 email:mail,
-                subject:"Resend OTP",
-                content:res.data.otp
+                subject:"OTP for Registration",
+                content:"Kindly use the following OTP to complete the registration - " + res.data.otp
             }).then(res=>{
                 if(res.data.status == "success"){
                     toast.success("Successfully sent the OTP again. Kindly check your mail")
