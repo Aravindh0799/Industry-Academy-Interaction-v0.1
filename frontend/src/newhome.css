@@ -35,7 +35,7 @@
   .demo-content_video {
     display: flex; 
     align-items: center; 
-    
+    height:350px;
   }
 
   
