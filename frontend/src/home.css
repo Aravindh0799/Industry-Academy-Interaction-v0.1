@@ -21,13 +21,14 @@
    /* justify-content: space-between;*/ /* Add this property */
   }
   
+  
+  
   /* .col-md-5 {
     flex: 0 0 40%;
     height: 100%;
     padding-top: 50px;
   
   } */
-  
   .col-md-5 .ratio {
     height: 100%;
   }
