@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './newsfeed.css'
 
 /*mmmm*/
 /*mmmm*/
@@ -10,11 +11,7 @@ function NewsFeed() {
 
 
 
- /* useEffect(() => {
-    axios.get('https://newsapi.org/v2/top-headlines?country=us&apiKey=7b7e138524fd43fbaa90e29e2318674f&pageSize=8')
-      .then(response => setNews(response.data.articles))
-      .catch(error => console.log(error));
-  }, []);*/
+ 
   useEffect(() => {
     setShowNews(false); // set the showNews state to false while the news is updating
     axios.get('https://newsapi.org/v2/top-headlines?country=in&apiKey=7b7e138524fd43fbaa90e29e2318674f&pageSize=8')
@@ -26,51 +23,29 @@ function NewsFeed() {
   }, []);
 
 
-//   axios.get('https://newsapi.org/v2/top-headlines?country=in&apiKey=7b7e138524fd43fbaa90e29e2318674f', {
-//   params: {
-//     country: 'india',
-//     apiKey: '7b7e138524fd43fbaa90e29e2318674f',
-//     pageSize: 8,q: 'education'  
-//   }
-// })
-//   .then(function (response) {
-//     console.log(response.data);
-//   })
-//   .catch(function (error) {
-//     console.error(error);
-//   });
-
-//   useEffect(() => {
-//   axios.get('https://newsapi.org/v2/top-headlines?country=us&apiKey=7b7e138524fd43fbaa90e29e2318674f&pageSize=9')
-//     .then(response => {
-//       setNews(response.data.articles);
-//     })
-//     .catch(error => console.log(error));
-// }, []);
-
 
 return (
   <div>
-    <div className="col-md-9"  style={{marginLeft:'50px'}}>
-      <div className="card">
-        <div className="card-header">
-          <h5 style={{color: "red"}} className="card-title animated">Latest News!!!</h5>
-        </div>
-        <div className="card-body">
-          {showNews ? (
-            <ul className="list-group">
-              {news.map(article => (
-                <li key={article.title} className="list-group-item">
-                  <a href={article.url} target="_blank" rel="noopener noreferrer">{article.title}</a>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <h6><l>Updating news...Wait</l> </h6>
-          )}
-        </div>
-      </div>
-    </div>
+          <div  style={{marginLeft:'0px'}}>
+                  <div className="card">
+                          <div className="card-header">
+                            <h5 style={{color: "red"}} className="card-title animated">Latest News!!!</h5>
+                          </div>
+                          <div className="card-body">
+                                  {showNews ? (
+                                    <ul className="list-group">
+                                      {news.map(article => (
+                                        <li key={article.title} className="list-group-item">
+                                          <a href={article.url} target="_blank" rel="noopener noreferrer">{article.title}</a>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  ) : (
+                                    <h6><l>Updating news...Wait</l> </h6>
+                                  )}
+                          </div>
+                  </div>
+          </div>
   </div>
 );
 }
