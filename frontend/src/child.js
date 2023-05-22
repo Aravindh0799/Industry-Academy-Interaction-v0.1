@@ -28,8 +28,7 @@ function Child() {
             onRequestClose={()=> setIsOpen(false)}
             className="chat-window">
             <Chatb/>
-            This is the content of the modal    
-        </ReactModal>
+       </ReactModal>
         </div>
   )
 }

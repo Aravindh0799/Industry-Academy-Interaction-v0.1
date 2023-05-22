@@ -16,6 +16,7 @@ const ModalForm = ({ closeModal , rowToEdit }) =>{
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = localStorage.getItem("userMail")
+    const aff = localStorage.getItem("affiliation");
   const profileData = {
     bio: bio,
     about: about,
@@ -30,6 +31,10 @@ const ModalForm = ({ closeModal , rowToEdit }) =>{
     if (rowToEdit === null) {
       const response = await Axios.post('http://localhost:6080/insertprofile', profileData);
       console.log('Profile saved successfully:', response.data);
+        window.location.href="academy";
+      // Axios.post("http://localhost:6080/updatedbio",{value:true, email:email}).then(res=>{
+      //   console.log('updated in db')
+    // })
     } else {
     }
     

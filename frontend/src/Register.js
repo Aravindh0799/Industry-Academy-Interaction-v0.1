@@ -179,7 +179,7 @@ const Register = () => {
                             Axios.post('http://localhost:6080/createotp',{email:email}).then((res)=>{
                                 if (res.data.status == "success"){
                                     const otp = res.data.otp
-                                    Axios.post('http://localhost:6080/mailer',{email:email,subject:"OTP for registration",content:'Kindly use the following OTP to complete the registration',otp}).then(res=>{
+                                    Axios.post('http://localhost:6080/mailer',{email:email,subject:"OTP for registration",content:`Kindly use the following OTP to complete the registration  ${otp}`}).then(res=>{
                                         if(res.data.status =="success"){
                                             setSuccess(true);
                                             

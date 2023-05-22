@@ -339,6 +339,7 @@ router.post('/login_academy',async(req, res)=>{
                     status:"success for academy",
                     data:token,
                     name:olduser.name,
+                    details:olduser.detailsprovided
                 })
             }
             else{
@@ -613,12 +614,14 @@ router.post('/insertprofile', async (req, res) => {
         education: req.body.education,
         skills: req.body.skills,
         languages: req.body.languages,
+        detailsprovided:true
       };
       const email = req.body.email;
   
       const updatedProfile = await academy.updateOne({ email: email }, profileData);
   
       if (updatedProfile) {
+        console.log('check ',updatedProfile.detailsprovided)
         res.status(201).json({ message: 'Profile updated successfully.' });
       } else {
         res.status(500).json({ error: 'An error occurred while updating the profile.' });

@@ -88,7 +88,12 @@ useEffect(() => {
                       console.log('hi')
                       localStorage.setItem("userName",res.data.name)
                       toast.success("Login Successful")
-                      window.location.href="academy";
+                      if(res.data.details==true){
+                        window.location.href="academy";
+                      }
+                      else if (res.data.details==false){
+                        window.location.href="newprofile";
+                      }
                     }
                     else{
                       toast.error('Please enter Valid Credentials')

@@ -54,6 +54,10 @@ const academySchema = new mongoose.Schema({
     resume:{
         type:Buffer,
         contentType:String
+    },
+    detailsprovided:{
+        type:Boolean,
+        default:false
     }
 })
 
