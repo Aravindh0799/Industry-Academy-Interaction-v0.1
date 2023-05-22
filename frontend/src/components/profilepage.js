@@ -38,8 +38,12 @@ fetchProfileData();
 },[])
  
   return (
-    
+    <>
+    <div class="nav-bar">
+        <Navbar1></Navbar1>
+       </div>
     <div className="container">
+        
       <div className="profile-main">
           <div className="profile-container">
                 <img src={coverimg} width="100%" />
@@ -115,6 +119,7 @@ fetchProfileData();
         </div>
 
       </div>
+      </>
   );
 }
 
