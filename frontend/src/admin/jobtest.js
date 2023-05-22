@@ -6,7 +6,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const Jobstest =({openModal})=>{
+const Jobstest =({openModal ,closeModal})=>{
   // const [modalOpen, setModalOpen] = useState(false)
   const [detail,setdetail]=useState([])
 
@@ -22,13 +22,14 @@ const Jobstest =({openModal})=>{
   }, []);
 
   const handleApply =(postedby, desg, city)=>{
+    console.log("handle apply called")
     const user = localStorage.getItem('userMail');
     localStorage.setItem('postedby', postedby);
     localStorage.setItem('city', city);
     localStorage.setItem('desg', desg);
     console.log('from the apply check', user,desg, postedby, city);
-    window.location.href = 'uploadpdf';
-    // openModal(); 
+    // window.location.href = 'uploadpdf';
+    openModal(); 
   }
     
   
@@ -70,7 +71,7 @@ const Jobstest =({openModal})=>{
                   <div className="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                     <div className="d-flex mb-3">
                      
-                      <a onClick={openModal} className="btn btn-primary" href="#">
+                      <a onClick={() => handleApply(job.postedby, job.designation, job.city)} className="btn btn-primary" href="#">
                         Apply Now
                       </a>
                     </div>
