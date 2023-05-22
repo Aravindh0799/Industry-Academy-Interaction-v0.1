@@ -12,6 +12,9 @@
 .profile-container {
   background: #fff;
 }
+.profile-description-container{
+  display: flex;
+}
 
 .profile-container-outer{
   display: flex;

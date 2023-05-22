@@ -42,7 +42,7 @@ fetchProfileData();
     <div class="nav-bar">
         <Navbar1></Navbar1>
        </div>
-    <div className="container">
+    <div className="container" style={{marginTop:'100px'}}>
         
       <div className="profile-main">
           <div className="profile-container">
@@ -98,22 +98,27 @@ fetchProfileData();
                
             </div>
             <div className="profile-description">
+               
             <h2>Skills</h2>
+            <div className='profile-description-container'> 
                 {profileData.skills?.map((skill) => (
                     <div key={skill.id}>
                     <a href="#" className="skills-btn">{skill}</a>
                     </div>
                 ))}
+                </div>
             </div>
 
 
             <div className="profile-description">
                 <h2>Languages</h2>
+                <div className='profile-description-container'>
                 {profileData.languages?.map((lang) => (
                 <div key={lang.id}>
                   <a href="#" className="language-btn">{lang}</a>&nbsp;
                 </div>
                 ))}
+            </div>
             </div>
 
         </div>
