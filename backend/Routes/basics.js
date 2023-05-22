@@ -295,7 +295,7 @@ router.get('/fetchallurls', async(req, res)=>{
     }
 })
 
-router.get('/fetchalldomain', async(req, res)=>{
+router.get('/fetchallfeed', async(req, res)=>{
     console.log('from the fetchal api');
     const data = await newsfeed.find();
     if(data){
@@ -313,9 +313,9 @@ router.get('/fetchalldomain', async(req, res)=>{
 })
 
 
-router.patch('/editdomain', async(req, res)=>{
-    console.log('from the edit api',req.body.universityname, req.body.domain);
-    const result = await domains.findOne(
+router.put('/editdomain', async(req, res)=>{
+    console.log('from the edit api',req.body.seq,req.body.universityname, req.body.domain);
+    const result = await domains.updateOne(
         {
             seq:req.body.seq
         },
@@ -367,6 +367,8 @@ router.patch('/editurl', async(req, res)=>{
         })
     }
 })
+
+  
 
 
 router.patch('/editnews', async(req, res)=>{
