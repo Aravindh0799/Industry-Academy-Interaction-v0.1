@@ -1,14 +1,11 @@
 
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import  Axios from './api/axios';
 import "./Register.css"; 
 import Image from './assets/signup_image_1.jpg'
 import Axios  from "axios";
-
-// import logo from './register_img.png';
+import { ToastContainer, toast } from "react-toastify";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -133,6 +130,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         localStorage.setItem("userMail",email);
+        localStorage.setItem("affiliationType",affiliationType);
         
         console.log(email)
         const v1 = USER_REGEX.test(user);
@@ -159,6 +157,7 @@ const Register = () => {
                     
                 }).then(res=>{
                     if (res.data.status === 409) {
+                        
                         //new user
                         console.log("response   ", res.data.status);
                         const userDetails= [{
@@ -175,6 +174,7 @@ const Register = () => {
                             const stringarr = JSON.stringify(userDetails);
                             console.log('jsonarr', stringarr);
                             localStorage.setItem('userDetails', stringarr);
+                            toast.success("Registered Successfully!")
 
                             Axios.post('http://localhost:6080/createotp',{email:email}).then((res)=>{
                                 if (res.data.status == "success"){
@@ -200,13 +200,12 @@ const Register = () => {
 
                     }
                     else{
-                        setUsernameError("User already exist");
+                        toast.error("Registration Failed!")
+                        setUsernameError(" *User already exist");
                         setSuccess(false);
                     }
                 })
-                // response();
 
-                // setSuccess(true);
             
                 setEmail('');
                 setUser('');
@@ -313,19 +312,13 @@ const Register = () => {
                 (
                     window.location.href="OtpVerify"
                 )
-                // <section>
-                //     <h1>Success!</h1>
-                //     <p>
-                //         <a href="samplelogin">Sign In</a>
-                //     </p>
-                // </section>
             ) : (
             
             <div className="registration-split-page">
+                <ToastContainer></ToastContainer>
                 <div className="register-left-section">
                     <h1>LOGO</h1>
                     <div className="register-left-main">
-                        {/* <p>LOGIN HERE !!</p> */}
                         <img src={Image} alt="login_image" />
                     </div>
                 </div>
