@@ -1,6 +1,7 @@
 import React, { useState , useEffect} from "react";
 import ReactDOM from "react-dom";
 import Axios from "axios"
+import { ToastContainer, toast } from "react-toastify";
 import "./Modal.css";
 
  const Modal = ({ closeModal, onSubmit, defaultValue, tableHead , 
@@ -57,13 +58,14 @@ import "./Modal.css";
         [col2]: formState[col2],
         [col3]: formState[col3]
       }).then((res)=>{
-        alert(`${col2} added successfully`);
+        toast.success(`${col2} added successfully`);
         window.location.reload();
       });
   
       
     });
   } catch (error) {
+    toast.error(`Unable to add ${col2}`);
     console.error("Error: ", error);
   }
 }
@@ -103,7 +105,7 @@ import "./Modal.css";
         <form>
           <div className="form-group">
             <label htmlFor={col2}>{tableHead?.col2}</label>
-            <input name={col2} onChange={handleChange} value={formState[col2]} />
+            <input name={col2} onChange={handleChange} value={formState[col2]} className="inputmodal"/>
           </div>
           <div className="form-group">
             <label htmlFor={col3}>{tableHead?.col3}</label>
@@ -111,6 +113,7 @@ import "./Modal.css";
               name={col3}
               onChange={handleChange}
               value={formState[col3]}
+              className="inputmodal"
             />
           </div>
           

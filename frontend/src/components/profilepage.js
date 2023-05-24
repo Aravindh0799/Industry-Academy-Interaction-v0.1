@@ -20,6 +20,15 @@ import "./profilepage.css";
 const ProfilePage =({openModal}) =>{
 
     const [profileData ,  setProfileData] = useState([]);
+    const [showExperienceDesc,setShowExperienceDesc] = useState(false);
+    const affiliation=localStorage.getItem("affiliation");
+
+
+    useEffect(() => {
+        if (affiliation === 'industry') {
+          setShowExperienceDesc(true);
+        }
+      }, [affiliation]);
  
     useEffect ( () => {
         const fetchProfileData = async () => {
@@ -67,6 +76,7 @@ fetchProfileData();
                 <a href="#" className="see-more-link">See More...</a>
             </div>
 
+        {showExperienceDesc &&(
             <div className="profile-description">
                 <h2>Experience</h2>
                 <div className="profile-desc-row">
@@ -82,6 +92,8 @@ fetchProfileData();
                     </div>
                 </div>
             </div>
+        )
+}
 
             <div className="profile-description">
                 <h2>Education</h2>

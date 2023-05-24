@@ -130,7 +130,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         localStorage.setItem("userMail",email);
-        localStorage.setItem("affiliationType",affiliationType);
+        
         
         console.log(email)
         const v1 = USER_REGEX.test(user);

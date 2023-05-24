@@ -8,6 +8,7 @@ import "./adminHome.css"
 import Table from './DataTable';
 import Modal from './Modal';
 import {Container} from 'react-bootstrap'
+import { ToastContainer } from 'react-toastify';
 function AdminPage() {
  
   const[modalOpen,setModalOpen] = useState(false);
@@ -163,13 +164,14 @@ const handleEditRow2 = (idx) =>{
     // ReactDOM.createPortal(
     
     <div className='App-admin'>
+      <ToastContainer></ToastContainer>
     <header>
   <nav>
    <AdminNav></AdminNav>
   </nav>
 </header>
      <Table rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} tableHead={tableHead} tableHeadData={tableHeadData}></Table>
-     <button className='btn' onClick={() => setModalOpen(true)}>Add</button>
+     <button className='btn admin-btn' onClick={() => setModalOpen(true)}>Add</button>
      {modalOpen && ReactDOM.createPortal( <Modal closeModal={() => {
      setModalOpen(false); 
      setRowToEdit(null);
@@ -185,7 +187,7 @@ const handleEditRow2 = (idx) =>{
      rowToEdit={rowToEdit} tableHeadData={tableHeadData}/>, document.querySelector("#modal-root"))}
     
     <Table rows={youtubeUrlRow} deleteRow={handleDeleteRow1} editRow={handleEditRow1} tableHead={tableHead2} tableHeadData={tableHead2Data}></Table>
-     <button className='btn' onClick={() => setModalOpen1(true)}>Add</button>
+     <button className='btn admin-btn' onClick={() => setModalOpen1(true)}>Add</button>
      {modalOpen1 && ReactDOM.createPortal( <Modal closeModal={() => {
      setModalOpen1(false); 
      setRowToEdit1(null);
@@ -202,7 +204,7 @@ const handleEditRow2 = (idx) =>{
      rowToEdit={rowToEdit1} tableHeadData={tableHead2Data}/>, document.querySelector("#modal-root"))}
 
 <Table rows={newsFeedUrlRow} deleteRow={handleDeleteRow2} editRow={handleEditRow2} tableHead={tableHead3} tableHeadData={tableHead3Data}></Table>
-     <button className='btn' onClick={() => setModalOpen2(true)}>Add</button>
+     <button className='btn admin-btn' onClick={() => setModalOpen2(true)}>Add</button>
      {modalOpen2 && ReactDOM.createPortal( <Modal closeModal={() => {
      setModalOpen2(false); 
      setRowToEdit2(null);

@@ -28,16 +28,20 @@
   margin-bottom: 20px;
 }
 
-label {
+.form-group label {
   font-weight: bold;
   margin-bottom: 10px;
+  margin-left: 9rem;
 }
 
 input {
   padding: 5px;
   border: 1px solid #ccc;
 }
-
+.profile-btn{
+  width: fit-content !important;
+  align-self: center !important;
+}
 .btn {
   background-color: #B1D0E0;
   width: auto;
@@ -56,4 +60,25 @@ input {
 
 .error {
   color: red;
+}
+
+
+.profileModal{
+  font-family: 'Nunito', sans-serif;
+  font-size:initial;
+  padding: 0.25rem;
+  border-radius: 0.3rem;
+  max-width: 100%;
+  width: 62% !important;
+  align-self: center !important;
+}
+.modal-profile{
+  position: relative;
+  width: 800px;
+  height: 500px;
+  background-color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

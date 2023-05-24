@@ -621,10 +621,9 @@ router.post('/insertprofile', async (req, res) => {
       const updatedProfile = await academy.updateOne({ email: email }, profileData);
   
       if (updatedProfile) {
-        console.log('check ',updatedProfile.detailsprovided)
-        res.status(201).json({ message: 'Profile updated successfully.' });
+        res.status(201).json({ statusMsg: 'success' });
       } else {
-        res.status(500).json({ error: 'An error occurred while updating the profile.' });
+        res.status(500).json({ errorMsg: 'failed' });
       }
     } catch (error) {
       console.log('Error in updating the profile details:', error);
