@@ -2,26 +2,43 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from "react-dom";
 import coverimg from "../images/cover-pic.png"
 import usermainImg from "../images/user-main.jpg"
-import user2 from "../images/user-2.png"
-import connectImg from "../images/connect.png"
-import chatImg from "../images/chat.png"
+//  
+// import user2 from "../images/user-2.png"
+// import connectImg from "../images/connect.png"
+// import chatImg from "../images/chat.png"
 import microsoftImg from "../images/microsoft.png"
-import slackImg from "../images/slack.png";
-import googleImg from "../images/google.png"
-import rightArrowImg from "../images/right-arrow.png"
-import northImg from "../images/north.png"
-import swinburnImg from "../images/Swinburn.png"
+// import slackImg from "../images/slack.png";
+// import googleImg from "../images/google.png"
+// import rightArrowImg from "../images/right-arrow.png"
+// import northImg from "../images/north.png"
+// import swinburnImg from "../images/Swinburn.png"
 import stanfordImg from "../images/stanford.png"
-import { BsFillPencilFill } from "react-icons/bs";
+import { BsFillPencilFill , BsPencilSquare } from "react-icons/bs";
 import Axios  from "axios";
-import {Container} from 'react-bootstrap'
+// import {Container} from 'react-bootstrap'
 import Navbar1 from '../components/Navbar1';
 import "./profilepage.css";
 const ProfilePage =({openModal}) =>{
 
-    const [profileData ,  setProfileData] = useState([]);
+    const [profileData ,  setProfileData] = useState({});
+    const [displayUploadBtn, setDisplayUploadBtn] = useState(false);
+    
     const [showExperienceDesc,setShowExperienceDesc] = useState(false);
     const affiliation=localStorage.getItem("affiliation");
+
+    const fetchProfileData = async () => {
+        const userEmail = localStorage.getItem("userMail")
+        console.log("USEREMAIL=========>",userEmail);
+        try {
+          const response = await Axios.post('http://localhost:6080/fetchProfileData', { email: userEmail });
+          const data = response.data;
+          setProfileData(data);
+          console.log("DATA======>",data);
+        } catch (error) {
+          console.error('An error occurred while fetching the profile:', error);
+        }
+}
+
 
 
     useEffect(() => {
@@ -31,21 +48,37 @@ const ProfilePage =({openModal}) =>{
       }, [affiliation]);
  
     useEffect ( () => {
-        const fetchProfileData = async () => {
-            const userEmail = localStorage.getItem("userMail")
-            console.log("USEREMAIL=========>",userEmail);
-            try {
-              const response = await Axios.post('http://localhost:6080/fetchProfileData', { email: userEmail });
-              const data = response.data;
-              setProfileData(data);
-              console.log("DATA======>",data);
-            } catch (error) {
-              console.error('An error occurred while fetching the profile:', error);
-            }
-}
-fetchProfileData();
+        fetchProfileData();
 },[])
+const handleMouseEnter = () => {
+    setDisplayUploadBtn(true);
+  };
+
+  const handleMouseLeave = () => {
+    setDisplayUploadBtn(false);
+  };
+
+  const handleFileChange = (event) => {
+    const choosedFile = event.target.files[0];
+    if (choosedFile) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        const img = document.querySelector('#photo');
+        if (img) {
+          img.setAttribute('src', reader.result);
+        }
+      });
+      reader.readAsDataURL(choosedFile);
+    }
+  };
+  
+  
+  const handleEditIconClick = () => {
+    const fileInput = document.querySelector('#file');
+    fileInput.click();
+  };
  
+
   return (
     <>
     <div class="nav-bar">
@@ -55,17 +88,24 @@ fetchProfileData();
         
       <div className="profile-main">
           <div className="profile-container">
-                <img src={coverimg} width="100%" />
+                <img src={coverimg} width="100%"/>
             <div className='profile-container-outer'>
-                <div className="profile-container-inner">
-                    <img src={usermainImg} className="profile-pic"/>
+                <div className="profile-container-inner profile-pic-div">
+                    <img src={usermainImg} className="profile-pic" id='photo'
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    />
+                    <div className="edit-icon" onClick={handleEditIconClick}>
+                        <BsPencilSquare className="edit-icon-btn" />
+                    </div>
+                    <input type="file" id="file" onChange={handleFileChange}/>
                     <h1>{profileData.name}</h1>
-                    <b>{profileData.bio}<a
-                            href="https://www.freecodebox.com/">freecodebox</a> tech agency </b>
-                    {/* <p>Pakistan, Australia (Head Office) &middot; <a href="#">Contact Info</a></p> */}
+                    <b>{profileData.bio}</b>
                 </div>
                 <div className='edit-btn-container'>
-                <BsFillPencilFill className="edit-btn" onClick={openModal}/>
+                <BsFillPencilFill className="edit-btn" onClick={ () => {
+                    openModal();
+                }}/>
                 </div>
             </div>
             
@@ -76,37 +116,40 @@ fetchProfileData();
                 <a href="#" className="see-more-link">See More...</a>
             </div>
 
-        {showExperienceDesc &&(
+        {showExperienceDesc &&  profileData.experience &&(
             <div className="profile-description">
                 <h2>Experience</h2>
+            {profileData.experience.map((expe,index) =>(
                 <div className="profile-desc-row">
                     <img src={microsoftImg}/>
                     <div>
                         <h3>
-                            Lead Front-End Developer
+                            {expe.jobRole}
                         </h3>
-                        <b>MicroSoft &middot; Part-Time(Remote)</b>
-                        <b>May 2022 - Present &middot; 1.9 year</b>
-                        <p>{profileData.experience}</p>
+                        <b>{expe.companyName} &middot; {expe.jobType}</b>
+                        <b>{expe.fromDate}- {expe.ToDate} </b>
+                        <p>{expe.experience}</p>
                         <hr/>
                     </div>
                 </div>
+                ))}
             </div>
         )
 }
 
             <div className="profile-description">
                 <h2>Education</h2>
+            {profileData.education && profileData.education.map((educ, index) => (
                 <div className="profile-desc-row" >
                     <img src={stanfordImg} />
                     <div>
-                        <h3>{profileData.education}</h3>
-                        <b>BSCS, Computer Science</b>
-                        <b>2019-2023</b>
+                        <h3>{educ.university}</h3>
+                        <b>{educ.degree}, {educ.department}</b>
+                        <b>{educ.fromYear}-{educ.toYear}</b>
                         <hr/>
                     </div>
                 </div>
-
+            ))}
                
             </div>
             <div className="profile-description">
@@ -136,6 +179,7 @@ fetchProfileData();
         </div>
 
       </div>
+      
       </>
   );
 }
