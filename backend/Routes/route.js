@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const academy = require('../Schema/academy')
 const industry = require('../Schema/industry')
+const job = require('../Schema/post')
+
 const Otp = require('../Schema/otp')
 const bcrypt  = require('bcrypt')
 const nodemailer = require('nodemailer');
@@ -12,6 +14,20 @@ const JWT_SECRET = "ciwbuconciwevccwu1229238c/idb871cb91383hc}28vwrgbw8b748{62[]
 router.post('/', async(req, res)=>{
     console.log('hello user')
     res.send('hello world')
+})
+router.post('/job',async(req,res)=>{
+    const user= new job(req.body)
+    const result=await user.save();
+    if(result)
+    {
+        res.json({
+            message:"success"
+        })
+    }
+    else
+    {
+        console.log('fail')
+    }
 })
 
 router.post('/register_academy', async(req, res)=>{
