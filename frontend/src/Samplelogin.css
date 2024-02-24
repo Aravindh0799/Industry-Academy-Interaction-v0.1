@@ -114,7 +114,7 @@
     border: 1px solid #ccc;
   }
   
-  button[type="submit"] {
+  button{
     display: block;
     background-color: #19A7CE;
     color: black;

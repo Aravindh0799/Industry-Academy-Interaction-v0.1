@@ -32,6 +32,41 @@ const academySchema = new mongoose.Schema({
     dept:{
         type:String,
         required:true
+    },
+    bio:{
+        type:String,
+    },
+    about:{
+        type:String,
+    },
+    experience:[{ 
+        companyName: String,
+        jobRole: String,
+        jobType: String,
+        fromDate: String,
+        toDate: String,
+        experience: String
+      }],
+    education:[{
+        university: String,
+        degree: String,
+        department: String,
+        fromYear: String,
+        toYear: String
+      }],
+    skills:{
+        type:[String]
+    },
+    languages:{
+        type:[String]
+    },
+    resume:{
+        type:Buffer,
+        contentType:String
+    },
+    detailsprovided:{
+        type:Boolean,
+        default:false
     }
 })
 

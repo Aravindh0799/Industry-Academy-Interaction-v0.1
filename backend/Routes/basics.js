@@ -113,11 +113,32 @@ router.post('/createacademy',async(req,res)=>{
         res.json({
             status:"failure"
         })
-    }
-    
+    }  
 })
 
-router.delete("/deleteUser",async(req,res)=>{
+router.post('/createindustry',async(req,res)=>{
+    const{name, email, password, affiliation, companyname, designation, chamber} = req.body.user[0];
+    const encryptedPassword = await bcrypt.hash(password,10);
+    console.log(req.body.user)
+    
+    const data = await new industry({name, email, password:encryptedPassword, affiliation, companyname, designation, chamber} )
+    
+    const result = data.save();
+    if(result){
+        res.json({
+            status:"success"
+        })
+
+    }
+    else{
+        res.json({
+            status:"failure"
+        })
+    }  
+})
+
+
+router.delete("/deleteOtp",async(req,res)=>{
 
     const {email}=req.body
     const result=await Otp.deleteOne({email})
@@ -274,7 +295,7 @@ router.get('/fetchallurls', async(req, res)=>{
     }
 })
 
-router.get('/fetchalldomain', async(req, res)=>{
+router.get('/fetchallfeed', async(req, res)=>{
     console.log('from the fetchal api');
     const data = await newsfeed.find();
     if(data){
@@ -292,9 +313,9 @@ router.get('/fetchalldomain', async(req, res)=>{
 })
 
 
-router.patch('/editdomain', async(req, res)=>{
-    console.log('from the edit api',req.body.universityname, req.body.domain);
-    const result = await domains.findOne(
+router.put('/editdomain', async(req, res)=>{
+    console.log('from the edit api',req.body.seq,req.body.universityname, req.body.domain);
+    const result = await domains.updateOne(
         {
             seq:req.body.seq
         },
@@ -346,6 +367,8 @@ router.patch('/editurl', async(req, res)=>{
         })
     }
 })
+
+  
 
 
 router.patch('/editnews', async(req, res)=>{

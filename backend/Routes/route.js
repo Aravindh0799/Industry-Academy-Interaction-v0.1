@@ -1,3 +1,5 @@
+
+
 const express = require('express')
 const router = express.Router()
 const academy = require('../Schema/academy')
@@ -9,6 +11,8 @@ const bcrypt  = require('bcrypt')
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken')
 const otp = require('otp-generator')
+const job=require('../Schema/jobs')
+const Profile=require('../Schema/Profile')
 const JWT_SECRET = "ciwbuconciwevccwu1229238c/idb871cb91383hc}28vwrgbw8b748{62[]()68cwv";
 
 router.post('/', async(req, res)=>{
@@ -17,6 +21,36 @@ router.post('/', async(req, res)=>{
 })
 router.post('/job',async(req,res)=>{
     const user= new job(req.body)
+    const result=await user.save();
+    if(result)
+    {
+        res.json({
+            message:"success"
+        })
+    }
+    else
+    {
+        console.log('fail')
+    }
+})
+
+
+router.get('/getalljob',async(req,res)=>{
+    console.log('from the getall api');
+    const user=await job.find();
+    if(user){
+        res.json({
+            user
+        })
+    }
+    else{
+        res.json({
+            message:"failed"
+        })
+    }
+}),
+router.post('/job_post',async(req,res)=>{
+    const user=new job(req.body)
     const result=await user.save();
     if(result)
     {
@@ -275,14 +309,26 @@ router.post('/login', async(req, res)=>{
     const academy_user = await academy.findOne({email});
     if(academy_user){
         res.json({
-            message:"true"
+            status:"success",
+            message:"academy"
         })
     }
-    else{
-        res.json({
-            message:"false"
-        })
+    else {
+        const industry_user = industry.findOne({email});
+        if(industry_user){
+            res.json({
+                status:"success",
+                message:"industry"
+            })
+        }
+        else{
+            res.json({
+                status:"failure",
+                error:"no user registered"
+            })
+        }
     }
+    
 
 }),
 
@@ -308,7 +354,8 @@ router.post('/login_academy',async(req, res)=>{
                 return res.json({
                     status:"success for academy",
                     data:token,
-                    name:olduser.name
+                    name:olduser.name,
+                    details:olduser.detailsprovided
                 })
             }
             else{
@@ -346,7 +393,8 @@ router.post('/login_industry', async(req, res)=>{
             if(res.status(201)){
                 return res.json({
                     status:"success for industry",
-                    data:token
+                    data:token,
+                    name:olduser.name
                 })
             }
             else{
@@ -437,7 +485,7 @@ router.post('/forgetpassword', async(req, res)=>{
                 const secret =  JWT_SECRET + user.password;
                 const token = jwt.sign({email:user.email, id:user._id},secret );
                 const flag = user.affiliation;
-                const link = `https://iai-v1.onrender.com/resetpassword/${user._id}/${flag}/${token}`;
+                const link = `http://localhost:6080/resetpassword/${user._id}/${flag}/${token}`;
                 console.log(link);
                 //nodemailer
                 res.send({
@@ -449,8 +497,8 @@ router.post('/forgetpassword', async(req, res)=>{
             const secret =  JWT_SECRET + olduser.password;
             const token = jwt.sign({email:olduser.email, id:olduser._id},secret );
             const flag = olduser.affiliation;
-            // res.render(`https://iai-v1.onrender.com/reset/${olduser._id}/${token}`);
-            const link = `https://iai-v1.onrender.com/resetpassword/${olduser._id}/${flag}/${token}`;
+            // res.render(`http://localhost:6080/reset/${olduser._id}/${token}`);
+            const link = `http://localhost:6080/resetpassword/${olduser._id}/${flag}/${token}`;
             console.log(link);
             //nodemailer
             res.send({
@@ -490,7 +538,7 @@ router.post('/forgot',async(req,res)=>{
         const secret = JWT_SECRET+olduser.password;
             const token = jwt.sign({email:olduser.email, id:olduser._id},JWT_SECRET );
 
-            const transfer = `https://iai-version-1-aravindh0799.vercel.app/reset/${token}/${olduser._id}`;
+            const transfer = `http://localhost:3000/reset/${token}/${olduser._id}`;
             res.send({
                 status:"success",
                 token:token,
@@ -570,6 +618,55 @@ router.post('/updatepass', async(req, res)=>{
         }
     }
 })
+
+// ============================ PROFILE PAGE API CALLS====================================
+
+router.post('/insertprofile', async (req, res) => {
+    try {
+      const profileData = {
+        bio: req.body.bio,
+        about: req.body.about,
+        experience: req.body.experience,
+        education: req.body.education,
+        skills: req.body.skills,
+        languages: req.body.languages,
+        detailsprovided:true
+      };
+      const email = req.body.email;
+  
+      const updatedProfile = await academy.updateOne({ email: email }, profileData);
+  
+      if (updatedProfile) {
+        res.status(201).json({ statusMsg: 'success' });
+      } else {
+        res.status(500).json({ errorMsg: 'failed' });
+      }
+    } catch (error) {
+      console.log('Error in updating the profile details:', error);
+    }
+  });
+  
+
+  router.post('/fetchProfileData', async (req, res) => {
+    try {
+      const email = req.body.email;
+      const profile = await academy.findOne({ email: email });
+      if (!profile) {
+        return res.status(404).json({ error: 'Profile not found' });
+      }
+      res.json(profile);
+      console.log(profile)
+    } catch (error) {
+      console.error('An error occurred while fetching the profile:', error);
+      res.status(500).json({ error: 'An error occurred while fetching the profile' });
+    }
+  });
+  
+
+
+///////==============================================
+
+  
 
 
 ///////==============================================
@@ -705,17 +802,22 @@ router.post('/find-username',async(req,res)=>{
         const otheruser = await academy.findOne({email:email});
         if(otheruser){
             const name = otheruser.name;
+            const college = otheruser.university;
             console.log('from the academy api',name);
             return res.json({
-                uname : `${name}` 
+                uname : `${name}`,
+                collegeName: `${college}`,
+                resume:otheruser.resume
             })
         }else{
             const olduser =await industry.findOne({email:email});
             if(olduser){
                 const name = olduser.name;
+                const company = olduser.companyname
                 console.log('from the api',name);
                 return res.json({
-                uname : `${name}`
+                uname : `${name}`,
+                companyname: `${company}`
                 })
             }
             else{
@@ -734,3 +836,9 @@ router.post('/find-username',async(req,res)=>{
 
 
 module.exports = router
+
+
+
+
+
+

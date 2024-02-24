@@ -1,8 +1,4 @@
-.split-page {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-  }
+
 .registration-split-page{
   display: flex;
   flex-direction: row;
@@ -66,10 +62,12 @@
     padding: 10px;
     min-height: 100vh;
     background-color: #F6F1F1;
+   
   }
   
   .register-right-fields{
     width: 60%;
+    transition: height 3s ease;
   }
 
 
@@ -99,6 +97,8 @@
     text-align: center;
   }
 
+ 
+
 
 
 
@@ -119,7 +119,7 @@
   
   button[type="submit"] {
     display: block;
-    background-color: #007bff;
+    background-color: #3483d7;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -146,6 +146,8 @@
     color: black;
     transition: 0.7s;
   }
+
+
   
 
   @media only screen and (max-width: 768px) {

@@ -1,19 +1,18 @@
 
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import  Axios from './api/axios';
 import "./Register.css"; 
 import Image from './assets/signup_image_1.jpg'
 import Axios  from "axios";
-
-// import logo from './register_img.png';
+import { ToastContainer, toast } from "react-toastify";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 const REGISTER_URL = '/register';
+
+
 
 const Register = () => {
     const userRef = useRef();
@@ -132,6 +131,7 @@ const Register = () => {
         e.preventDefault();
         localStorage.setItem("userMail",email);
         
+        
         console.log(email)
         const v1 = USER_REGEX.test(user);
         const v2 = PWD_REGEX.test(pwd);
@@ -151,15 +151,15 @@ const Register = () => {
           
           if(affiliationType === "academic"){
             try {
-                const response =  await Axios.post('https://iai-v1.onrender.com/find-username',{
+                const response =  await Axios.post('http://localhost:6080/find-username',{
             
                     email:email
                     
                 }).then(res=>{
                     if (res.data.status === 409) {
+                        
                         //new user
                         console.log("response   ", res.data.status);
-                       
                         const userDetails= [{
                             name:user,
                             email:email,
@@ -174,11 +174,12 @@ const Register = () => {
                             const stringarr = JSON.stringify(userDetails);
                             console.log('jsonarr', stringarr);
                             localStorage.setItem('userDetails', stringarr);
+                            toast.success("Registered Successfully!")
 
-                            Axios.post('https://iai-v1.onrender.com/createotp',{email:email}).then((res)=>{
+                            Axios.post('http://localhost:6080/createotp',{email:email}).then((res)=>{
                                 if (res.data.status == "success"){
                                     const otp = res.data.otp
-                                    Axios.post('https://iai-v1.onrender.com/mailer',{email:email,subject:"OTP for registration",content:otp}).then(res=>{
+                                    Axios.post('http://localhost:6080/mailer',{email:email,subject:"OTP for registration",content:`Kindly use the following OTP to complete the registration  ${otp}`}).then(res=>{
                                         if(res.data.status =="success"){
                                             setSuccess(true);
                                             
@@ -197,6 +198,78 @@ const Register = () => {
 
                         
 
+                    }
+                    else{
+                        toast.error("Registration Failed!")
+                        setUsernameError(" *User already exist");
+                        setSuccess(false);
+                    }
+                })
+
+            
+                setEmail('');
+                setUser('');
+                setPwd('');
+                setMatchPwd('');
+                setAcademicPosition('');
+                setCompanyName('');
+                setDesignationName('');
+                setChamberMember('');
+                setDegree('');
+                setDeptName('');
+                
+
+            } catch (err) {
+             console.log('unknown eroor in catch()', err)
+                if (!err?.response) {
+                    setErrMsg('No Server Response');
+                }  else {
+                    setErrMsg('Registration Failed');
+                }
+                // errRef.current.focus();
+            }
+        }
+        else if(affiliationType === 'industry'){
+            try {
+                const response =  await Axios.post('http://localhost:6080/find-username',{
+            
+                    email:email
+                    
+                }).then(res=>{
+                    if (res.data.status === 409) {
+                        //new user
+                        console.log("response   ", res.data.status);
+                       
+                        const userDetails= [{
+                            name:user,
+                            email:email,
+                            password: pwd,
+                            affiliation:affiliationType,
+                            companyname:companyName,
+                            designation:designationName,
+                            chamber:chamberMember
+                        }];
+                
+                        const stringarr = JSON.stringify(userDetails);
+                        console.log('jsonarr', stringarr);
+                        localStorage.setItem('userDetails', stringarr);
+
+                        Axios.post('http://localhost:6080/createotp',{email:email}).then((res)=>{
+                            if (res.data.status == "success"){
+                                const otp = res.data.otp
+                                Axios.post('http://localhost:6080/mailer',{email:email,subject:"OTP for registration",content:otp}).then(res=>{
+                                    if(res.data.status =="success"){
+                                        setSuccess(true);                                        
+                                    }
+                                    else{
+                                        setSuccess(false)
+                                    }
+                                })
+                            }
+                            else{
+                                setSuccess(false)
+                            }
+                        })
                     }
                     else{
                         setUsernameError("User already exist");
@@ -229,50 +302,8 @@ const Register = () => {
                 // errRef.current.focus();
             }
         }
-        else if(affiliationType === 'industry'){
-            try {
-                const response = await Axios.post('https://iai-v1.onrender.com/register_industry',{
-                    name:user,
-                    email:email,
-                    password: pwd,
-                    affiliation:affiliationType,
-                    companyname:companyName,
-                    designation:designationName,
-                    chamber:chamberMember
-                }).then(res=>{            
-                    if (res.data.status == 409) {
-                        console.log("response   ", res.data.status);
-                        setUsernameError("User already exist");
-                        setSuccess(false);
-                    }
-                    else{
-                        // setErrMsg(false);
-                        setSuccess(true);
-                        console.log("error")
-                    }
-                });
-;
-               
-            
-                setEmail('');
-                setUser('');
-                setPwd('');
-                setMatchPwd('');
-            } catch (err) {
-                console.log('error occured in catch()',err)
-                if (!err?.response) {
-                    setErrMsg('No Server Response');
-                }  else {
-                    setErrMsg('Registration Failed')
-                }
-                // errRef.current.focus();
-            }
-        }
-        
     }
-    
-    
-    
+
     return (
         <>
             {success ? (
@@ -281,19 +312,13 @@ const Register = () => {
                 (
                     window.location.href="OtpVerify"
                 )
-                // <section>
-                //     <h1>Success!</h1>
-                //     <p>
-                //         <a href="samplelogin">Sign In</a>
-                //     </p>
-                // </section>
             ) : (
             
             <div className="registration-split-page">
+                <ToastContainer></ToastContainer>
                 <div className="register-left-section">
                     <h1>LOGO</h1>
                     <div className="register-left-main">
-                        {/* <p>LOGIN HERE !!</p> */}
                         <img src={Image} alt="login_image" />
                     </div>
                 </div>

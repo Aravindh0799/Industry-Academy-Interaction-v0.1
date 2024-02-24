@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 // import Navbar1 from '../components/Navbar1';
 import AdminNav from './AdminNav';
 import ReactDOM from "react-dom";
@@ -8,6 +8,7 @@ import "./adminHome.css"
 import Table from './DataTable';
 import Modal from './Modal';
 import {Container} from 'react-bootstrap'
+import { ToastContainer } from 'react-toastify';
 function AdminPage() {
  
   const[modalOpen,setModalOpen] = useState(false);
@@ -16,6 +17,18 @@ function AdminPage() {
   const [rowToEdit , setRowToEdit] = useState(null);
   const [rowToEdit1 , setRowToEdit1] = useState(null);
   const [rowToEdit2 , setRowToEdit2] = useState(null);
+
+  const urlEndPointOfDomainSequence = "sequencedomain"
+  const urlEndPointOfYoutubeSequence = "sequenceurl"
+  const urlEndPointOfFeedSequence = "sequencenews"
+
+  const urlEndPointOfInsertDomain = "createdomain"
+  const urlEndPointOfInsertYoutubeURL = "createurl"
+  const urlEndPointOfInsertNewsfeed = "createnews"
+
+  const urlEndPointOfUpdateDomain = "editdomain"
+  const urlEndPointOfUpdateUrl = "editurl"
+  const urlEndPointOfUpdateFeed = "editnews"
  
   const tableHead = {
     col1: 'S.No',
@@ -24,13 +37,23 @@ function AdminPage() {
     col4: 'Actions'
   };
 
+  const tableHeadData = {
+    col1: 'seq',
+    col2: 'universityname',
+    col3: 'domain'
+  }
+
   const tableHead2 = {
     col1: 'S.No',
     col2: 'Youtube URL',
     col3: 'Title',
     col4: 'Actions'
   };
-
+  const tableHead2Data = {
+    col1: 'seq',
+    col2: 'url',
+    col3: 'title'
+  }
   const tableHead3 = {
     col1: 'S.No',
     col2: 'Newsfeed URL',
@@ -38,60 +61,39 @@ function AdminPage() {
     col4: 'Actions'
   };
 
+  const tableHead3Data = {
+    col1: 'seq',
+    col2: 'newsfeedurl',
+    col3: 'title'
+  }
 
-  const [rows, setRows] = useState([
-   {
-     S_no: "1",
-     UniName: "PSG College Of Technology",
-     Domain: "@psgtech.ac.in",
-   },
-   {
-     S_no: "2",
-     UniName: "Bishop Heber College",
-     Domain: "@bhc.edu.in",
-   },
-   {
-     S_no: "3",
-     UniName: "test",
-     Domain: "@test.ac.in",
-   },
- ]);
- const [youtubeURL, setYoutubeURL] = useState([
-  {
-    S_no: "1",
-    UniName: "https://youtu.be/Js5UMbD9r5U",
-    Domain: "TEDxuTulsa",
-  },
-  {
-    S_no: "2",
-    UniName: "https://youtu.be/gOwAWpBeDSg",
-    Domain: "TEDxHHL",
-  },
-  {
-    S_no: "3",
-    UniName: "https://youtu.be/xz3tjI5cmrQ",
-    Domain: "TEDxIIMRanchi",
-  },
-]);
 
-const [newsFeedURL, setnewsFeedURL] = useState([
-  {
-    S_no: "1",
-    UniName: "https://indianexpress.com/article/education/life-in-an-iit",
-    Domain: "IIT-Student Article",
-  },
-  {
-    S_no: "2",
-    UniName: "https://timesofindia.indiatimes.com/education/jobs/teacher-jobs/kvs-recruitment-2022",
-    Domain: "KVS-Recruitment",
-  },
-  {
-    S_no: "3",
-    UniName: "https://timesofindia.indiatimes.com/education/medical",
-    Domain: "Medical",
-  },
-]);
- 
+  const [rows, setRows] = useState([]);
+ const [youtubeUrlRow, setYoutubeURL] = useState([]);
+const [newsFeedUrlRow, setnewsFeedURL] = useState([]);
+
+useEffect(() => {
+  console.log("row========>",rows)
+  Axios.get('http://localhost:6080/fetchalldomain').then((response) => {
+    console.log("res==========>",response.data.data)
+    setRows(response.data.data)
+  })
+},[])
+
+useEffect(() => {
+  Axios.get('http://localhost:6080/fetchallurls').then((response) => {
+    console.log("res==========>",response.data.data)
+    setYoutubeURL(response.data.data)
+  })
+},[])
+
+useEffect(() => {
+  Axios.get('http://localhost:6080/fetchallfeed').then((response) => {
+    console.log("res==========>",response.data.data)
+    setnewsFeedURL(response.data.data)
+  })
+},[])
+
  const handleDeleteRow = (targetIndex) => {
    setRows(rows.filter((_,idx) => idx !== targetIndex))
  }
@@ -105,7 +107,7 @@ const handleDeleteRow2 = (targetIndex) => {
  const handleSubmit = (newRow) =>{
    rowToEdit === null ?
    setRows([...rows,newRow]):
-   setRows(rows.map((currRow,idx) => {
+   setRows(rows?.map((currRow,idx) => {
      if(idx !== rowToEdit){
        return currRow;
      }
@@ -117,8 +119,8 @@ const handleDeleteRow2 = (targetIndex) => {
 
  const handleYoutubeUrlSubmit = (newRow) =>{
   rowToEdit1 === null ?
-  setYoutubeURL([...youtubeURL,newRow]):
-  setYoutubeURL(youtubeURL.map((currRow,idx) => {
+  setYoutubeURL([...youtubeUrlRow,newRow]):
+  setYoutubeURL(youtubeUrlRow?.map((currRow,idx) => {
     if(idx !== rowToEdit1){
       return currRow;
     }
@@ -130,8 +132,8 @@ const handleDeleteRow2 = (targetIndex) => {
 
 const handleNewsFeedUrl = (newRow) =>{
   rowToEdit2 === null ?
-  setnewsFeedURL([...newsFeedURL,newRow]):
-  setnewsFeedURL(newsFeedURL.map((currRow,idx) => {
+  setnewsFeedURL([...newsFeedUrlRow,newRow]):
+  setnewsFeedURL(newsFeedUrlRow?.map((currRow,idx) => {
     if(idx !== rowToEdit2){
       return currRow;
     }
@@ -142,6 +144,7 @@ const handleNewsFeedUrl = (newRow) =>{
 }
  
  const handleEditRow = (idx) =>{
+  console.log("inside handle edit adminhome")
    setRowToEdit(idx);
  
    setModalOpen(true);
@@ -160,39 +163,61 @@ const handleEditRow2 = (idx) =>{
   
     // ReactDOM.createPortal(
     
-    <div className='App'>
+    <div className='App-admin'>
+      <ToastContainer></ToastContainer>
     <header>
   <nav>
    <AdminNav></AdminNav>
   </nav>
 </header>
-     <Table rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} tableHead={tableHead}></Table>
-     <button className='btn' onClick={() => setModalOpen(true)}>Add</button>
+     <Table rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} tableHead={tableHead} tableHeadData={tableHeadData}></Table>
+     <button className='btn admin-btn' onClick={() => setModalOpen(true)}>Add</button>
      {modalOpen && ReactDOM.createPortal( <Modal closeModal={() => {
      setModalOpen(false); 
      setRowToEdit(null);
     }} 
-     onSubmit={handleSubmit} defaultValue={rowToEdit !== null && rows[rowToEdit]} 
-     tableHead={tableHead}/>, document.querySelector("#modal-root"))}
+     onSubmit={handleSubmit} defaultValue={rowToEdit !== null && rows[rowToEdit] ? 
+      {
+      seq: rows[rowToEdit].seq,
+      universityname: rows[rowToEdit].universityname,
+      domain:rows[rowToEdit].domain
+     }:{}} 
+     tableHead={tableHead} urlEndPointOfSequence={urlEndPointOfDomainSequence}  
+     urlEndPointOfInsert={urlEndPointOfInsertDomain} urlEndPointOfUpdate={urlEndPointOfUpdateDomain} 
+     rowToEdit={rowToEdit} tableHeadData={tableHeadData}/>, document.querySelector("#modal-root"))}
     
-    <Table rows={youtubeURL} deleteRow={handleDeleteRow1} editRow={handleEditRow1} tableHead={tableHead2}></Table>
-     <button className='btn' onClick={() => setModalOpen1(true)}>Add</button>
+    <Table rows={youtubeUrlRow} deleteRow={handleDeleteRow1} editRow={handleEditRow1} tableHead={tableHead2} tableHeadData={tableHead2Data}></Table>
+     <button className='btn admin-btn' onClick={() => setModalOpen1(true)}>Add</button>
      {modalOpen1 && ReactDOM.createPortal( <Modal closeModal={() => {
      setModalOpen1(false); 
      setRowToEdit1(null);
      
     }} 
-     onSubmit={handleYoutubeUrlSubmit} defaultValue={rowToEdit1 !== null && youtubeURL[rowToEdit1]}
-     tableHead={tableHead2}/>, document.querySelector("#modal-root"))}
+     onSubmit={handleYoutubeUrlSubmit}  defaultValue={rowToEdit1 !== null && youtubeUrlRow[rowToEdit1] ? 
+      {
+      seq: youtubeUrlRow[rowToEdit1].seq,
+      url: youtubeUrlRow[rowToEdit1].url,
+      title:youtubeUrlRow[rowToEdit1].title
+     }:{}}
+     tableHead={tableHead2} urlEndPointOfSequence={urlEndPointOfYoutubeSequence} 
+     urlEndPointOfInsert={urlEndPointOfInsertYoutubeURL} urlEndPointOfUpdate={urlEndPointOfUpdateUrl}
+     rowToEdit={rowToEdit1} tableHeadData={tableHead2Data}/>, document.querySelector("#modal-root"))}
 
-<Table rows={newsFeedURL} deleteRow={handleDeleteRow2} editRow={handleEditRow2} tableHead={tableHead3}></Table>
-     <button className='btn' onClick={() => setModalOpen2(true)}>Add</button>
+<Table rows={newsFeedUrlRow} deleteRow={handleDeleteRow2} editRow={handleEditRow2} tableHead={tableHead3} tableHeadData={tableHead3Data}></Table>
+     <button className='btn admin-btn' onClick={() => setModalOpen2(true)}>Add</button>
      {modalOpen2 && ReactDOM.createPortal( <Modal closeModal={() => {
      setModalOpen2(false); 
      setRowToEdit2(null);
     }} 
-     onSubmit={handleNewsFeedUrl} defaultValue={rowToEdit2 !== null && newsFeedURL[rowToEdit2]}
-      tableHead={tableHead3}/>, document.querySelector("#modal-root"))}
+     onSubmit={handleNewsFeedUrl} defaultValue={rowToEdit2 !== null && newsFeedUrlRow[rowToEdit2] ? 
+      {
+      seq: newsFeedUrlRow[rowToEdit2].seq,
+      newsfeedurl: newsFeedUrlRow[rowToEdit2].newsfeedurl,
+      title:newsFeedUrlRow[rowToEdit2].title
+     }:{}}
+      tableHead={tableHead3} urlEndPointOfSequence={urlEndPointOfFeedSequence} 
+      urlEndPointOfInsert={urlEndPointOfInsertNewsfeed} urlEndPointOfUpdate={urlEndPointOfUpdateFeed}
+      rowToEdit={rowToEdit2} tableHeadData={tableHead3Data}/>, document.querySelector("#modal-root"))}
     </div> 
   //   ,document.querySelector("#modal"))
     

@@ -1,14 +1,14 @@
 import React from "react";
-
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
-
 import "./Table.css";
 
- const Table = ({ rows, deleteRow, editRow , tableHead }) => {
+const Table = ({ rows, deleteRow, editRow, tableHead , tableHeadData}) => {
+  const{col1,col2,col3} =tableHeadData
   return (
-   
     <div className="table-wrapper">
-       {console.log("tableHead======>",tableHead)}
+      {console.log("tableHead======>", tableHead)}
+      {console.log("tableHeadData======>", tableHeadData)}
+      {console.log("rows======>", rows)}
       <table className="table">
         <thead>
           <tr>
@@ -19,18 +19,12 @@ import "./Table.css";
           </tr>
         </thead>
         <tbody>
-          {rows?.map((row, idx) => {
-            
-
-            return (
+          {Array.isArray(rows) && rows.length > 0 ? (
+            rows.map((row, idx) => (
               <tr key={idx}>
-                <td>{row.S_no}</td>
-                <td className="expand">{row.UniName}</td>
-                <td>
-                  {/* <span className={`label label-${row.Domain}`}> */}
-                    {row.Domain}
-                  {/* </span> */}
-                </td>
+                <td>{row[col1]}</td>
+                <td className="expand">{row[col2]}</td>
+                <td>{row[col3]}</td>
                 <td className="fit">
                   <span className="actions">
                     <BsFillTrashFill
@@ -44,8 +38,12 @@ import "./Table.css";
                   </span>
                 </td>
               </tr>
-            );
-          })}
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4">No data available</td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

@@ -3,9 +3,12 @@ import "./Samplelogin.css"; // import your CSS file here
 import Axios from 'axios';
 import Image from './assets/signup_image_1.jpg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+// toast.configure(
 
+// );
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
@@ -47,33 +50,34 @@ useEffect(() => {
     
     e.preventDefault();
     console.log(email)
-    const v2 = PWD_REGEX.test(password);
+    // const v2 = PWD_REGEX.test(password);
     const v3 = EMAIL_REGEX.test(email);
-    if (!v2 || !v3) {
+
+    if(!v3){
+      toast.error("Please enter a valid mail ID")
+    }
+
+    if (!v3) {
       setErrMsg("Invalid Entry");
       return;
   }
     try {
         window.localStorage.setItem("userMail",email);
         
-        
-
-
-
         Axios({
             
             method:"post",
-            url:"https://iai-v1.onrender.com/login",
+            url:"http://localhost:6080/login",
             data:{
                 email:email,
                 password:password
             }
         }).then((res)=>{
             
-            if(res.data.message==="true"){
+            if(res.data.message==="academy"){
                 Axios({
                     method:"post",
-                    url:"https://iai-v1.onrender.com/login_academy",
+                    url:"http://localhost:6080/login_academy",
                     data:{
                         email:email,
                         password:password
@@ -83,39 +87,52 @@ useEffect(() => {
                     if(res.data.status==="success for academy"){
                       console.log('hi')
                       localStorage.setItem("userName",res.data.name)
-                      window.location.href="https://iai-version-1-aravindh0799.vercel.app/";
+                      toast.success("Login Successful")
+                      if(res.data.details==true){
+                        window.location.href="academy";
+                      }
+                      else if (res.data.details==false){
+                        window.location.href="newprofile";
+                      }
                     }
                     else{
-                      alert('user not registered')
+                      toast.error('Please enter Valid Credentials')
                       console.log('error')
                     }
 
                     window.localStorage.setItem("token", res);
                     window.localStorage.setItem('is logged in', "true");
-                    
+                    window.localStorage.setItem("affiliation","academy")
                 })
             }
+            else if(res.data.message=='industry'){
+              Axios({
+                method:"post",
+                url:"http://localhost:6080/login_industry",
+                data:{
+                    email:email,
+                    password:password
+                }
+            }).then((res)=>{
+                console.log('res', res.data.status);
+                if(res.data.status==="success for industry"){
+                  console.log('hi')
+                  localStorage.setItem("userName",res.data.name)
+                  toast.success("Login Successful")
+                  window.location.href="industry";
+                }
+                else{
+                  toast.error("Please enter Valid Credentials");
+                  console.log('error')
+                }
+
+                window.localStorage.setItem("token", res);
+                window.localStorage.setItem('is logged in', "true");
+                window.localStorage.setItem("affiliation","industry")
+            })
+            }
             else{
-                Axios({
-                    method:"post",
-                    url:"https://iai-v1.onrender.com/login_industry",
-                    data:{
-                        email:email,
-                        password:password
-                    }
-                }).then((res)=>{
-                  console.log('got response', res)
-                  if(res.data.status==="success for industry"){
-                    console.log('hi')
-                    window.location.href="https://iai-version-1-aravindh0799.vercel.app/";
-                  }
-                  else{
-                    alert('user not registered')
-                    console.log('error')
-                  }
-                    window.localStorage.setItem("token", res);
-                    window.localStorage.setItem('is logged in', "true");
-                })
+               alert('user not registered');
             }
         })
     }
@@ -126,6 +143,7 @@ useEffect(() => {
 
   return (
     <div className="split-page">
+      <ToastContainer />
       <div className="left-section">
         <h1>LOGO</h1>
         <div className="left-main">
@@ -145,7 +163,7 @@ useEffect(() => {
             Email:
             <FontAwesomeIcon icon={faCheck} className={validEmail ? "valid" : "hide"} />
             <FontAwesomeIcon icon={faTimes} className={validEmail || !email ? "hide" : "invalid"} />
-            <input type="email" 
+            <input type="text" 
             name="email" 
             value={email} 
             onChange={handleEmailChange}
@@ -153,13 +171,14 @@ useEffect(() => {
             aria-describedby="uidnote" 
             onFocus={() => setEmailFocus(true)}
             onBlur={() => setEmailFocus(false)}
+            formnovalidate="formnovalidate" 
             />
           </label>
-          <p id="uidnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
+          {/* <p id="uidnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             '@' symbol missing.<br />
                             Enter a valid Email address.<br />
-                        </p>
+                        </p> */}
           <label>
             Password:
             <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
@@ -174,12 +193,12 @@ useEffect(() => {
             onBlur={() => setPwdFocus(false)} 
             onChange={handlePasswordChange}/>
           </label>
-          <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
+          {/* <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             8 to 24 characters.<br />
                             Must include uppercase and lowercase letters, a number and a special character.<br />
                             Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
-                        </p>
+                        </p> */}
           <br/>
           <div class="links">
           <p>
@@ -190,7 +209,7 @@ useEffect(() => {
             <a href="forgotpassword">Forgot password?</a>
           </p>
           </div>
-          <button type="submit" >Submit</button>
+          <button class="submit-button" type="submit" >Submit</button>
         </form>
       </div>
       </div>

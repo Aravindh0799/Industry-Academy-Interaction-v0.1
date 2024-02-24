@@ -13,7 +13,7 @@ function ForgotPasswordPage() {
       return;
     }
     else{
-      axios.post('https://iai-v1.onrender.com/updatepass',{
+      axios.post('http://localhost:6080/updatepass',{
         password:password,
         token:token
       }).then((res)=>{
@@ -21,7 +21,7 @@ function ForgotPasswordPage() {
         if(res.data.message==='updated'){
           alert('updated succesfully');
           window.localStorage.clear('token');
-          window.location.href='https://iai-version-1-aravindh0799.vercel.app/samplelogin';
+          window.location.href='http://localhost:3000/samplelogin';
         }
       })
     }

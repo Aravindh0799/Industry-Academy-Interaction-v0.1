@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const domainschema = new mongoose.Schema({
-    universityname:{
+    seq:{
+        type:Number,
+        required:true
+    },
+    name:{
         type:String,
         required:true
     },

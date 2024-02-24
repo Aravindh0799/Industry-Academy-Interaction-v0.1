@@ -1,22 +1,29 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import ReactDOM from "react-dom";
+import Axios from "axios"
+import { ToastContainer, toast } from "react-toastify";
 import "./Modal.css";
 
- const Modal = ({ closeModal, onSubmit, defaultValue, tableHead }) => {
+ const Modal = ({ closeModal, onSubmit, defaultValue, tableHead , 
+  rowToEdit,urlEndPointOfSequence,urlEndPointOfInsert,tableHeadData,urlEndPointOfUpdate }) => {
+  
+  const{col1,col2,col3} =tableHeadData
   const [formState, setFormState] = useState(
     defaultValue || {
-      // S_no: "",
-      UniName: "",
-      Domain: "",
+      [col1]: "",
+      [col2]: "",
+      [col3]: "",
      
     }
   );
   const [errors, setErrors] = useState("");
-
+  // useEffect(() => {
+  //   console.log('rowToEdit:', rowToEdit);
+  // }, [rowToEdit]);
  
 
   const validateForm = () => {
-    if (formState.UniName && formState.Domain) {
+    if (formState[col2] && formState[col3]) {
       setErrors("");
       return true;
     } else {
@@ -35,15 +42,54 @@ import "./Modal.css";
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!validateForm()) return;
-
-    onSubmit(formState);
-
-    closeModal();
+  try {
+      if (rowToEdit === null) {
+  console.log("inside add row");
+  try {
+    console.log("insideee try block")
+    const response = await Axios.post(`http://localhost:6080/${urlEndPointOfSequence}`).then((response)=>{
+      console.log("Checking Len: ", response.data.len);
+       Axios.post(`http://localhost:6080/${urlEndPointOfInsert}`, {
+        [col1]: response.data.len + 1,
+        [col2]: formState[col2],
+        [col3]: formState[col3]
+      }).then((res)=>{
+        toast.success(`${col2} added successfully`);
+        window.location.reload();
+      });
+  
+      
+    });
+  } catch (error) {
+    toast.error(`Unable to add ${col2}`);
+    console.error("Error: ", error);
+  }
+}
+ else {
+        console.log("inside update", formState, rowToEdit);
+        console.log("checking columns", col1,col2,col3)//${urlEndPointOfUpdate}
+        const response = await Axios.put("http://localhost:6080/editdomain", {
+          [col1]: formState[col1],
+          [col2]: formState[col2],
+          [col3]: formState[col3]
+        });
+        
+        alert("Updated successfully");
+        window.location.reload();
+      }
+  
+      onSubmit(formState);
+      closeModal();
+    } catch (error) {
+      console.error(error);
+      setErrors("Error adding data to the database");
+    }
   };
+  
 
   return (
     
@@ -58,15 +104,16 @@ import "./Modal.css";
       <div className="modal">
         <form>
           <div className="form-group">
-            <label htmlFor="UniName">{tableHead?.col3}</label>
-            <input name="UniName" onChange={handleChange} value={formState.UniName} />
+            <label htmlFor={col2}>{tableHead?.col2}</label>
+            <input name={col2} onChange={handleChange} value={formState[col2]} className="inputmodal"/>
           </div>
           <div className="form-group">
-            <label htmlFor="Domain">{tableHead?.col2}</label>
+            <label htmlFor={col3}>{tableHead?.col3}</label>
             <input
-              name="Domain"
+              name={col3}
               onChange={handleChange}
-              value={formState.Domain}
+              value={formState[col3]}
+              className="inputmodal"
             />
           </div>
           

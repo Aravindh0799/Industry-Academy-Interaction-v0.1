@@ -1,99 +1,256 @@
-.body
-{
-    background-color: rgba(228, 245, 250, 0.25);
+.profile-main {
+  flex-basis: 73%;
 }
 
+.profile-sidebar {
+  flex-basis: 25%;
+  align-self: flex-start;
+  position: sticky;
+  top: 73px;
+}
+.button-click{
+  cursor: pointer;
+}
+.label-icon{
+  display: flex;
+  flex-direction: row;
+}
+.edu-label , .exp-label{
+  margin-right: 10px;
+}
+.delete-btn-ed{
+  color: red;
+  align-self: center;
+}
+.profile-form{
+  max-width: none !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-grow: 1;
+  padding-bottom: 1rem;
+}
 
-/*css for profile container*/
+.profile-container {
+  background: #fff;
+}
+.profile-description-container{
+  display: flex;
+}
 
-  .profile
-   {
+.profile-container-outer{
+  display: flex;
+  flex-direction: row;
+}
+
+.profile-container-inner {
+  padding: 0 4% 10px;
+}
+
+.edit-btn-container .edit-btn:hover{
+  cursor: pointer;
+}
+
+.profile-pic {
+  width: 150px;
+  border-radius: 50%;
+  margin-top: -75px;
+  padding: 5px;
+  background: #fff;
+  height: 150px;
+  
+  object-fit: cover;
+}
+
+.profile-container h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #222;
+}
+
+.profile-container b {
+  font-weight: 500;
+}
+
+.profile-container p {
+  margin-top: 5px;
+}
+
+.profile-container p a {
+  color: #045be6;
+  font-weight: 500;
+}
+
+.profile-container b a {
+  color: #045be6;
+  font-weight: 500;
+}
+
+.mutual-connection {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.mutual-connection img {
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.profile-btn {
+  margin: 20px 0;
+}
+
+.profile-btn a {
+  display: inline-flex;
+  align-items: center;
+  background: #e4e6eb;
+  padding: 6px 15px;
+  border-radius: 4px;
+  margin-right: 10px;
+
+}
+.profile-btn a img{
+  width: 18px;
+  margin-right: 5px;
+}
+.profile-btn #primary-btn{
+background: #045be6;
+color: #fff;
+}
+.profile-description{
+  background: #fff;
+  padding: 20px 4% 30px;
+  margin: 12px 0;
+}
+.profile-description h2{
+  color: #333;
+  margin: 10px 0 20px;
+  font-weight: 600;
+}
+.see-more-link{
+  display: block;
+  text-align: right;
+  font-size: 15px;
+}
+.profile-desc-row{
+  display: flex;
+  align-items:flex-start ;
+  margin: 20px 0;
+}
+.profile-desc-row img{
+  width: 50px;
+  margin-right: 25px;
+  margin-top: 5px;
+}
+.profile-desc-row div{
+  width: 100%;
+}
+.profile-desc-row h3{
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+.profile-desc-row b{
+  display: block;
+  font-weight: 500;
+  font-size: 15px;
+}
+.profile-desc-row p{
+  margin-top: 15px;
+}
+.profile-desc-row hr{
+  border:0;
+  border-bottom: 1px solid #999;
+  margin-top: 10px;
+}
+.experience-link{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+  font-weight: 500;
+}
+.experience-link img{
+  width: 20px;
+  margin-left: 8px;
+}
+.skills-btn{
+  display: inline-block;
+  margin: 10px 5px;
+  padding: 6px 18px;
+  border: 1px solid #777;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.language-btn{
+  display: inline-block;
+  margin: 10px 5px;
+  padding: 6px 18px;
+  background: #e4e6eb;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* #uploadBtn{
+  height: 40px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.7);
+  color: wheat;
+  line-height: 30px;
+  font-family: sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+  display: none;
+}
+#file{
+  display: none;
+}
+  */
+
+  .profile-container-inner {
+    position: relative;
+  }
+  
+  .edit-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
-    height:350px;
-    border: 2px rgb(0, 0, 0);
-  }
- 
-  
-  .left,.right
-  {
-    flex-basis: 50%;
-    justify-content: center; 
-
-  }
-
-  /*css for button container*/
-  .button-container
-  {
-    display: grid;
-  grid-template-columns: 1fr 1fr; /* Two equal columns */
-  grid-gap: 10px; 
-    
-  }
-  
-  .left-button,.right-button
-  {
-    display: flex;
-    justify-content: center; 
-  }
-
- .profile-button
- {
-     border-radius: 3%;
-     background: linear-gradient(to bottom, #9ad1f9, #0056b3); /* Blue gradient color */
-     color: white;
-     width: 100%;
-
-   }
-   .contact
-   {
-       width:20%;
-   }
- .Activities-button
- {
-    border-radius: 3%;
-    background: linear-gradient(to bottom, #9ad1f9, #0056b3); /* Blue gradient color */
-  color: white;
-  width: 100%;
- }
-
-  /*hovering effect*/
-  .profile-button:hover,
-  .Activities-button:hover {
-    background: linear-gradient(to bottom, #0056b3, #9ad1f9); /* Blue gradient color reversed on hover */
+    justify-content: center;
     cursor: pointer;
-  }
+    opacity: 0;
+    transition: opacity 0.3s ease;
 
- 
-  /*css for aboutcprojects,skills,education container*/
-  
-  .about, .projects, .skills, .education
-   {
-    background: rgba(234, 207, 207, 0.2); 
-    backdrop-filter: blur(10px); 
-    border-radius: 10px;/* Add padding to the content area */
-    height: 330px;
-    background-color: red;
+    width: 150px;
+    height: 150px;
+  border-radius: 50%;
+  margin-top: -75px;
+  margin-left: 20%;
+  padding: 5px;
+  background: rgba(0,0,0,0.2);
   }
   
-  .about-container h4, .projects-container h4, .skills-container h4, .education-container h4 {
-    color: rgb(22, 3, 3); /* Set the text color */
-    font-size: 18px; /* Adjust font size as needed */
-    font-weight: bold; /* Set font weight as needed */
-    margin-bottom: 10px; /* Add margin to separate the heading and content */
-    height: 350px;
+  .edit-icon:hover {
+    opacity: 1;
   }
-  .about-container,
-.projects-container,
-.skills-container,
-.education-container {
-  background: rgba(241, 247, 247, 0.8); /* Set a semi-transparent background color */
-  backdrop-filter: blur(10px); /* Apply a blur effect to create the glass-like appearance */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
-  border-radius: 8px; /* Apply rounded corners to the container */
-  padding: 20px; /* Add padding for content spacing */
-  margin-bottom: 20px; /* Add margin to separate the containers */
-}
-
   
- 
+  .edit-icon-btn {
+    color: wheat;
+    font-size: 24px;
+  }
+  
+  #file {
+    display: none;
+  }
+  

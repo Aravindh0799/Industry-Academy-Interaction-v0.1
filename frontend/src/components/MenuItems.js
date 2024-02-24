@@ -1,10 +1,10 @@
 
 let name = localStorage.getItem('uname')
 
-export const MenuItems = [
+export const MenuItemsforAcademy = [
     {
         title : "Home",
-        url : "#",
+        url : "/",
         cName : "nav-links",
         icon : "fa-solid fa-house-user "
     },
@@ -22,7 +22,53 @@ export const MenuItems = [
     },
     {
         title : "Job",
+        url : "/jobs",
+        cName : "nav-links",
+        icon : "fa-solid fa-suitcase"
+    },
+    {
+        title : "Notices",
         url : "#",
+        cName : "nav-links",
+        icon : "fa-sharp fa-regular fa-bell"
+    },
+    {
+        title:"username",
+        url:"#",
+        cName:" nav-links",
+        icon:"fa-solid fa-circle-user"
+    },
+    {
+        title : "Logout",
+        url : "/",
+        cName : "nav-links-mobile logout-btn",
+        
+    },
+
+]
+
+export const MenuItemsforIndustry = [
+    {
+        title : "Home",
+        url : "/industry",
+        cName : "nav-links",
+        icon : "fa-solid fa-house-user "
+    },
+    // {
+    //     title : "About",
+    //     url : "#",
+    //     cName : "nav-links",
+    //     icon : "fa-sharp fa-solid fa-circle-info"
+    // },
+    {
+        title : "Feed",
+        url : "#",
+        cName : "nav-links",
+        icon : "fa-solid fa-rss"   
+    },
+    {
+        title : "Job",
+        url : "/industrypost",
         cName : "nav-links",
         icon : "fa-solid fa-suitcase"
     },
@@ -48,13 +94,15 @@ export const MenuItems = [
 ]
 
 
+
+
 export const MenuItemsBeforeLogin =[
-    {
-        title : "Home",
-        url : "#",
-        cName : "nav-links",
-        icon : "fa-solid fa-house-user"
-    },
+    // {
+    //     title : "Home",
+    //     url : "#",
+    //     cName : "nav-links",
+    //     icon : "fa-solid fa-house-user"
+    // },
     {
         title : "Login",
         url : "samplelogin",
